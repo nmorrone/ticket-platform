@@ -1,7 +1,7 @@
 package it.spring.ticket.platform.model;
 
-public class Roles {
+public class Categoria {
 
 	private Integer id;
-	private String name;
+	private String nome;
 }
