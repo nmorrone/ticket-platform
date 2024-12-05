@@ -1,9 +1,13 @@
 package it.spring.ticket.platform.model;
 
+import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
+@Entity
+@Table(name="stati")
 public class Stato {
 	
 	@Id
@@ -11,6 +15,8 @@ public class Stato {
 	@NotNull (message="Inserisci il nome dello Stato")
 	@NotBlank (message="Inserisci il nome dello Stato")
 	private String nome;
+	
+	//getters and setters
 	public Integer getId() {
 		return id;
 	}

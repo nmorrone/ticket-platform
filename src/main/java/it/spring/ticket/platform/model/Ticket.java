@@ -28,36 +28,34 @@ public class Ticket {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
-	@NotNull(message = "Inserisci la data di inizio dell'offerta")
-	@FutureOrPresent(message = "La data di inizio non può essere precedente ad oggi")
+	@NotNull(message = "Inserisci la data di creazione del Ticket")
+	@FutureOrPresent(message = "La data non può essere antecedente ad oggi")
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private LocalDate dataCreazione;
 	@NotBlank(message = "Inserisci un titolo al Ticket")
 	@NotNull(message = "Inserisci un titolo al Ticket")
 	private String titolo;
-
 	// entity relationship Many to 1
 	@ManyToOne
 	@JoinColumn(name = "categoria_id", nullable = false)
 	@JsonBackReference
 	private Categoria categoria;
-
 	// entity relationshop Many to 1
 	@ManyToOne
 	@JoinColumn(name = "stato_id", nullable = false)
 	@JsonBackReference
 	private Stato stato;
-
 	// entity relationship 1to1
 	@ManyToOne
 	@JoinColumn(name = "user_id", nullable = false)
 	@JsonBackReference
 	private User operatore;
-
 	// entity relationship 1 to Many
 	@OneToMany(mappedBy = "ticket")
 	private List<Nota> note;
 
+	
+	//getters and setters
 	public Integer getId() {
 		return id;
 	}
@@ -113,5 +111,6 @@ public class Ticket {
 	public void setNote(List<Nota> note) {
 		this.note = note;
 	}
+	
 
 }
