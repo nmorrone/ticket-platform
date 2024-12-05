@@ -49,7 +49,7 @@ public class Ticket {
 	@ManyToOne
 	@JoinColumn(name = "user_id", nullable = false)
 	@JsonBackReference
-	private User operatore;
+	private User user;
 	// entity relationship 1 to Many
 	@OneToMany(mappedBy = "ticket")
 	private List<Nota> note;
@@ -97,11 +97,11 @@ public class Ticket {
 	}
 
 	public User getOperatore() {
-		return operatore;
+		return user;
 	}
 
-	public void setOperatore(User operatore) {
-		this.operatore = operatore;
+	public void setOperatore(User user) {
+		this.user = user;
 	}
 
 	public List<Nota> getNote() {

@@ -20,10 +20,10 @@ public class DatabaseUserDetailsService implements UserDetailsService{
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		
-		Optional <User> userByEmail = userRepo.findByEmail(username);
+		Optional <User> userByUsername = userRepo.findByUsername(username);
 		
-		if(userByEmail.isPresent()) {
-			return new DatabaseUserDetails(userByEmail.get());
+		if(userByUsername.isPresent()) {
+			return new DatabaseUserDetails(userByUsername.get());
 		}
 		else {
 			throw new UsernameNotFoundException("Non è registrato nessun utente con questa Email");

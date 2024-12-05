@@ -35,7 +35,7 @@ public class Nota {
 	@ManyToOne
 	@JoinColumn(name = "user_id", nullable = false)
 	@JsonBackReference
-	private User autore;
+	private User user;
 	//entity relationship Many to 1
 	@ManyToOne
 	@JoinColumn(name = "ticket_id", nullable = false)
@@ -61,11 +61,11 @@ public class Nota {
 	public void setDataInserimento(LocalDate dataInserimento) {
 		this.dataInserimento = dataInserimento;
 	}
-	public User getAutore() {
-		return autore;
+	public User getUser() {
+		return user;
 	}
-	public void setAutore(User autore) {
-		this.autore = autore;
+	public void setUser(User user) {
+		this.user = user;
 	}
 	public Ticket getTicket() {
 		return ticket;
