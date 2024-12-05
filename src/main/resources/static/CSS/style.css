@@ -1,0 +1,82 @@
+/*
+Theme Name: La mia Pizzeria
+Theme URI: https://lamiapizzeria.com
+Description: Spring exercise Boolean
+Author: Nicola Morrone
+Author URI: https://instagram.com/nmorronee
+Version: 0.1
+*/
+p {
+	font-size: 16px;
+}
+
+td,tr,th{
+	font-size: 14px;
+	color: dimgray;
+}
+
+a {
+	text-decoration: none;
+	color: dimgrey;
+}
+
+a:hover {
+	color: orange;
+}
+
+.top-header {
+	border-bottom: 1px solid #c6c6c6;
+	box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+	border-top: 10px solid orange;
+}
+
+.nav-link-active {
+	
+	color: navy !important;
+}
+
+.prezzo{
+	text-align: center;
+}
+
+.btn-outline {
+	border: 1px solid orange;
+	color: orange;
+}
+
+.btn-outline:hover{
+	border: 1px solid orange;
+	background-color: orange;
+	color: #fff;
+}
+
+.dropdown:hover .dropdown-menu {
+    display: block;
+
+}
+
+.myButton{
+	border: solid 1px lightgray;
+	border-radius: 100%;
+	color: orange;
+}
+
+.myButton:hover{
+	border: solid 1px orange;
+	background-color: orange;
+	color: #fff;
+}
+
+.dropdown-item:hover {
+	background-color: #fff;
+}
+
+.dropdown-menu {
+	text-align: center;
+	border: none;
+}
+
+.small-texts{
+	font-size: 12px;
+	font-style: italic;
+}

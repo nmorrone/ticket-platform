@@ -12,14 +12,14 @@ import it.spring.ticket.platform.model.User;
 public class DatabaseUserDetails implements UserDetails{
 	
 private final Integer id;
-private final String email;
+private final String username;
 private final String password;
 private final HashSet<GrantedAuthority> authorities;
 
 
 public DatabaseUserDetails(User user) {
 	this.id = user.getId();
-	this.email = user.getEmail();
+	this.username = user.getUsername();
 	this.password = user.getPassword();
 	authorities = new HashSet<GrantedAuthority>();
 	for (Roles role : user.getRoles()) {
@@ -46,7 +46,7 @@ public String getPassword() {
 @Override
 public String getUsername() {
 	// TODO Auto-generated method stub
-	return this.email;
+	return this.username;
 }
 
 

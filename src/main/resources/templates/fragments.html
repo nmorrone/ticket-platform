@@ -1,15 +1,16 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org">
-	<!--Script and Utilities Fragment-->
+<!--Script and Utilities Fragment-->
+
 <head th:fragment="pageHead(title)">
 	<!-- Required meta tags -->
-		<meta charset="utf-8">
-		<meta name="viewport" content="width=device-width, initial-scale=1">
-		<!-- Bootstrap CSS -->
-		<link th:rel="stylesheet" th:href="@{/webjars/bootstrap/5.1.3/css/bootstrap.min.css}"/>
-		<link th:rel="stylesheet" th:href="@{/webjars/font-awesome/5.15.4/css/all.css}"/>
-		<link th:rel="stylesheet" type="text/css" th:href="@{/css/style.css}" />
-		<title>Ticket Platform - [[${title}]]</title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<!-- Bootstrap CSS -->
+	<link th:rel="stylesheet" th:href="@{/webjars/bootstrap/5.1.3/css/bootstrap.min.css}" />
+	<link th:rel="stylesheet" th:href="@{/webjars/font-awesome/5.15.4/css/all.css}" />
+	<link th:rel="stylesheet" type="text/css" th:href="@{/css/style.css}" />
+	<title>Ticket Platform - [[${title}]]</title>
 </head>
 
 
@@ -24,8 +25,8 @@
 			<div class="d-flex flex-row justify-content-between align-items-center py-3">
 				<!--Logo with Redirect-->
 				<div class="col">
-					<a  th:href="@{'/'}" >
-					<img th:src="@{/img/LogoPizza.png}"alt="" style="width: 100px;"  />
+					<a th:href="@{'/'}">
+						<img th:src="@{/img/TicketPlatform-Logo.png}" alt="" style="width: 100px;" />
 					</a>
 				</div>
 				<div>
@@ -42,33 +43,37 @@
 									<a class="nav-link" aria-current="page" th:href="@{'/'}"
 										th:classappend="${pagename == 'home'} ? 'nav-link-active':'nav-link'">Home</a>
 								</li>
-								
-								<li class="nav-item">L
-									<a class="nav-link" th:href="@{'/pizze'}"
-										th:classappend="${pagename == 'dashboardAdmin'} ? 'nav-link-active' : 'nav-link'">Dashboard Admin</a>
+
+								<li class="nav-item">
+									<a class="nav-link" th:href="@{'/dashboard-admin'}"
+										th:classappend="${pagename == 'dashboard'} ? 'nav-link-active' : 'nav-link'">Dashboard
+										Admin</a>
 								</li>
 								<li class="nav-item" sec:authorize="hasAuthority('USER')">
-								<a class="nav-link" aria-current="page" th:href="@{'/pizze/crea-pizza'}"
-								th:classappend="${pagename == 'tickets'} ? 'nav-link-active':'nav-link'">Le mie Lavorazioni</a>
+									<a class="nav-link" aria-current="page" th:href="@{'/tickets'}"
+										th:classappend="${pagename == 'tickets'} ? 'nav-link-active':'nav-link'">Le mie
+										Lavorazioni</a>
 								</li>
 								</li>
 								<li class="nav-item">
-								<a class="nav-link" aria-current="page" th:href="@{'/login'}"
-								th:classappend="${pagename == 'profilo'} ? 'nav-link-active':'nav-link'">Il mio Profilo</a>
+									<a class="nav-link" aria-current="page" th:href="@{'/il-mio-account'}"
+										th:classappend="${pagename == 'profilo'} ? 'nav-link-active':'nav-link'">Il mio
+										Profilo</a>
 								</li>
 								<li class="nav-item">
-								<a class="nav-link" aria-current="page" th:href="@{'/login'}"
-								th:classappend="${pagename == 'login'} ? 'nav-link-active':'nav-link'">Accedi</a>
+									<a class="nav-link" aria-current="page" th:href="@{'/login'}"
+										th:classappend="${pagename == 'login'} ? 'nav-link-active':'nav-link'">Accedi</a>
 								</li>
 							</ul>
 						</div>
 					</nav>
 				</div>
 			</div>
-			<div class="d-flex flex-row justify-content-between align-items-center py-2" sec:authorize="isAuthenticated()">
+			<div class="d-flex flex-row justify-content-between align-items-center py-2"
+				sec:authorize="isAuthenticated()">
 				<div>
 					<p style="font-size: 10px; font-style: italic;">Utente: <span sec:authenticate="name"></span>
-					Tipo di Utente: <span sec:authentication="principal.authorities"></span></p>
+						Tipo di Utente: <span sec:authentication="principal.authorities"></span></p>
 				</div>
 				<div>
 					<a class="btn btn-outline" href="/logout"><i class="fas fa-sign-out-alt"></i></a>
@@ -77,14 +82,14 @@
 		</div>
 	</header>
 
-	
+
 	<footer th:fragment="footer(pagename)" class="footer" style="margin-top: 100px;">
 		<div class="row justify-content-center p-5 bg-dark">
 			<div class="col-lg-4 text-center">
 				<p style="color: white; font-size: 12px;">Copyright @2024 - Designed by Nicola Morrone</p>
 			</div>
 		</div>
-		
+
 	</footer>
 
 </body>
