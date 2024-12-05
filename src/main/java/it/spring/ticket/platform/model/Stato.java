@@ -4,12 +4,12 @@ import jakarta.persistence.Id;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
-public class Categoria {
-
+public class Stato {
+	
 	@Id
 	private Integer id;
-	@NotNull (message="Inserisci il nome dello Categoria")
-	@NotBlank (message="Inserisci il nome dello Categoria")
+	@NotNull (message="Inserisci il nome dello Stato")
+	@NotBlank (message="Inserisci il nome dello Stato")
 	private String nome;
 	public Integer getId() {
 		return id;
