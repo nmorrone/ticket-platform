@@ -6,6 +6,7 @@ import java.util.HashSet;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+
 import it.spring.ticket.platform.model.Roles;
 import it.spring.ticket.platform.model.User;
 
@@ -22,6 +23,7 @@ public DatabaseUserDetails(User user) {
 	this.username = user.getUsername();
 	this.password = user.getPassword();
 	authorities = new HashSet<GrantedAuthority>();
+	
 	for (Roles role : user.getRoles()) {
 		authorities.add(new SimpleGrantedAuthority(role.getName()));
 	}
@@ -75,6 +77,11 @@ public boolean isCredentialsNonExpired() {
 public boolean isEnabled() {
 	// TODO Auto-generated method stub
 	return true;
+}
+
+
+public Integer getId() {
+	return id;
 }
 
 

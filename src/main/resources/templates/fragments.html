@@ -72,7 +72,7 @@
 			<div class="d-flex flex-row justify-content-between align-items-center py-2"
 				sec:authorize="isAuthenticated()">
 				<div>
-					<p style="font-size: 10px; font-style: italic;">Utente: <span sec:authenticate="name"></span>
+					<p style="font-size: 10px; font-style: italic;">Utente: <span sec:authentication="name"></span>
 						Tipo di Utente: <span sec:authentication="principal.authorities"></span></p>
 				</div>
 				<div>

@@ -22,12 +22,11 @@ public class User {
 	@NotBlank(message = "Inserisci una password valida")
 	@NotNull(message = "Inserisci una password valida")
 	private String password;
-	// valore true false, perennemente true per Admin
-	@NotNull(message = "Imposta il tuo stato di disponibilità")
-	private boolean disponibile;
 	// entity relationship Many to Many
 	@ManyToMany(fetch = FetchType.EAGER)
 	private Set<Roles> roles;
+	@NotNull(message = "Imposta il tuo stato di disponibilità")
+	private boolean disponibile;
 	// entity relationship 1 to Many
 	@OneToMany(mappedBy = "user")
 	private List<Ticket> tickets;
