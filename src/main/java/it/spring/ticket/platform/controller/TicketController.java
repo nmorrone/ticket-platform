@@ -31,7 +31,8 @@ public class TicketController {
 			listaTickets = ticketsRepo.findAll();
 		}
 		model.addAttribute("tickets", listaTickets);
-		return "lista-tickets";
+		
+		return "tickets/lista-tickets";
 	}
 
 }
