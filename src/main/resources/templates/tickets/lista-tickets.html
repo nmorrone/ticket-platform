@@ -11,16 +11,25 @@
 
 	<!--Contenuto Homepage-->
 	<section class="content p3">
-		<div class="container col-lg-10 myContainer">
+		<div class="container col-lg-10 myContainer" th:object="${operatore}">
+			<!--Intestazione Pagina-->
+			<div class="row py-5">
+				<div class="col">
+					<h6>Benvenuto <span style="color: orange;" th:text="*{username}"></span></h6>
+					<p class="small-texts">Ecco l'elenco delle tue lavorazioni</p>
+					<hr style="color: orange;">
+				</div>
+			</div>
 			<!--Messaggio avviso lista vuota-->
-			<div class="row p-5" th:if="${tickets.isEmpty()}">
-				<div class="col align-items-center text-center"><span style="color: firebrick">Non è presente Nessun Ticket in Archivio!</span>
+			<div class="row p-5" th:if="${ticketsOperatore.isEmpty()}">
+				<div class="col align-items-center text-center"><span style="color: firebrick">Non è presente Nessun
+						Ticket in Archivio!</span>
 				</div>
 			</div>
 			<div class="row-justify-content-center">
 				<div class="col">
 
-					<table th:if="${!tickets.isEmpty()}" th:object="${tickets}">
+					<table th:if="${!ticketsOperatore.isEmpty()}" th:object="${ticketsOperatore}">
 						<thead>
 							<tr>
 								<th>Id</th>

@@ -44,7 +44,7 @@
 										th:classappend="${pagename == 'home'} ? 'nav-link-active':'nav-link'">Home</a>
 								</li>
 
-								<li class="nav-item">
+								<li class="nav-item" sec:authorize="hasAuthority('ADMIN')">
 									<a class="nav-link" th:href="@{'/dashboard-admin'}"
 										th:classappend="${pagename == 'dashboard'} ? 'nav-link-active' : 'nav-link'">Dashboard
 										Admin</a>
