@@ -1,5 +1,6 @@
 package it.spring.ticket.platform.controller;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -46,8 +47,7 @@ public class TicketController {
 	//visualizzazione tickets ADMIN
 	@GetMapping("/dashboard-admin")
 	public String listaTickets(Authentication authentication, @RequestParam(name="keyword", required = false) String keyword,Model model) {
-	
-		
+
 		List <Ticket> listaTickets;
 		if(keyword!=null && !keyword.isBlank()) {
 			listaTickets = ticketsRepo.findByTitoloContaining(keyword);
@@ -69,25 +69,31 @@ public class TicketController {
 	}
 	//Paginainserimento nuovo ticket ADMIN
 	@GetMapping("/crea-ticket")
-	public String creazioneTicket(Model model) {
-		List <Categoria> categorie = categorieRepo.findAll();
-		List <Stato> stati = statiRepo.findAll();		
-		List <User> operatori = new ArrayList<>();
+	public String creazioneTicket (Model model) {	
+		List <User> operatori = new ArrayList<>();		
 		for(User user : userRepo.findAll()) {
-			if(user.isDisponibile() == true) {
+			if(user.isDisponibile() == true)  {
 				operatori.add(user);
 			}
 		}
 		model.addAttribute("ticket", new Ticket());
 		model.addAttribute("operatori", operatori);
-		model.addAttribute("categorie", categorie);
-		model.addAttribute("stati", stati);
+		model.addAttribute("categorie", categorieRepo.findAll());
 		return "tickets/crea-ticket";
 		
 	}
 	@PostMapping("/crea-ticket")
-	public String storeTicket(@Valid @ModelAttribute ("ticket") Ticket ticketForm,BindingResult bindingResults, Model model) {
-			if(bindingResults.hasErrors()) {return "tickets/crea-ticket";}
+	public String storeTicket(@Valid @ModelAttribute("ticket") Ticket ticketForm, BindingResult bindingResults, Model model) {
+			if(bindingResults.hasErrors()) {
+				return "tickets/crea-ticket";
+				}
+			
+			else if(ticketForm.getUser() == null) {
+				ticketForm.setStato(statiRepo.findById(1).get());
+			}
+			else if (ticketForm.getUser() != null) {
+			ticketForm.setStato(statiRepo.findById(2).get());
+			}
 			ticketsRepo.save(ticketForm);
 			return "redirect:/dashboard-admin";
 	}

@@ -35,6 +35,9 @@ public class Ticket {
 	@NotBlank(message = "Inserisci un titolo al Ticket")
 	@NotNull(message = "Inserisci un titolo al Ticket")
 	private String titolo;
+	@NotBlank(message = "Inserisci una descrizione al Ticket")
+	@NotNull(message = "Inserisci una descrizione al Ticket")
+	private String descrizione;
 	// entity relationship Many to 1
 	@ManyToOne
 	@JoinColumn(name = "categoria_id", nullable = false)
@@ -53,6 +56,10 @@ public class Ticket {
 	// entity relationship 1 to Many
 	@OneToMany(mappedBy = "ticket")
 	private List<Nota> note;
+	
+	public Ticket() {
+		this.dataCreazione = LocalDate.now();
+	}
 
 	
 	//getters and setters
@@ -96,11 +103,11 @@ public class Ticket {
 		this.stato = stato;
 	}
 
-	public User getOperatore() {
+	public User getUser() {
 		return user;
 	}
 
-	public void setOperatore(User user) {
+	public void setUser(User user) {
 		this.user = user;
 	}
 
@@ -110,6 +117,14 @@ public class Ticket {
 
 	public void setNote(List<Nota> note) {
 		this.note = note;
+	}
+
+	public String getDescrizione() {
+		return descrizione;
+	}
+
+	public void setDescrizione(String descrizione) {
+		this.descrizione = descrizione;
 	}
 	
 

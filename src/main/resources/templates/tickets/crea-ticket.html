@@ -13,6 +13,9 @@
 	<section class="content">
 		<div class="container col-lg-10 myContainer mt-5"
 			style="box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;">
+			<div class="row pt-5 justify-content-center">
+				<img th:src="@{/img/TicketPlatform-Logo.png}" alt="" style="width: 100px;" />
+			</div>
 			<div class="row pt-5 px-5">
 				<h6><span style="color:orange;">Creazione</span> Ticket</h6>
 				<p class="small-texts">Inserimento nuovo ticket di assistenza.</p>
@@ -22,29 +25,54 @@
 				<div class="col">
 					<!--Form inserimento ticket-->
 					<form id="ticketForm" th:object="${ticket}" th:action="@{/crea-ticket}" method="post">
-						<div class="col mb-3">
-							<label for="titolo" class="form-label">Inserisci il titolo del Ticket</label>
+						<!--Titolo-->
+						<div class="row mb-3">
+							<label for="titolo" class="form-label">Titolo</label>
 							<input type="text" class="form-control" id="titolo" th:field="*{titolo}"
 								th:errorClass="is-invalid">
+							<div th:if="${#fields.hasErrors('titolo')}" class="invalid-feedback">
+								<ul>
+									<li th:each="err : ${#fields.errors('titolo')}" th:text="${err}"></li>
+								</ul>
+							</div>
 						</div>
-						<!--Select Menu per Categoria Ticket-->
-						<div class="col-lg-4 mb-3">
-							<label for="|categoria_${categoria.id}|">Scegli la Categoria</label>
-							<select class="form-select" name="|categoria_${categoria.id}|" th:field="*{categoria}"
-								required>
-								<option th:each="categoria : ${categorie}" th:value="${categoria.id}"
-									th:id="|categoria_${categoria.id}|" th:text="${categoria.nome}"></option>
-							</select>
+						<!--Descrizione-->
+						<div class="row mb-5">
+							<label for="descrizione" class="form-label">Dettagli del Ticket</label>
+							<textarea type="text" class="form-control" id="descrizione" th:field="*{descrizione}"
+								th:errorClass="is-invalid" rows="3"></textarea>
+							<div th:if="${#fields.hasErrors('descrizione')}" class="invalid-feedback">
+								<ul>
+									<li th:each="err : ${#fields.errors('descrizione')}" th:text="${err}"></li>
+								</ul>
+							</div>
 						</div>
-						<!--Select Menu per Operatori Disponibili-->
-						<div class="col-lg-4 mb-3">
-							<label for="|categoria_${categoria.id}|">Scegli la Categoria</label>
-							<select class="form-select" name="|categoria_${categoria.id}|" th:field="*{categoria}"
-								required>
-								<option th:each="categoria : ${categorie}" th:value="${categoria.id}"
-									th:id="|categoria_${categoria.id}|" th:text="${categoria.nome}"></option>
-							</select>
+						<div class="row mb-3">
+							<!--Select Menu per Categoria Ticket-->
+							<div class="col-lg-4 mb-3">
+								<select class="form-select" th:field="*{categoria}" name="categoria" id="categoria">
+									<option th:each="categoria : ${categorie}" th:value="${categoria.id}" 
+										th:text="${categoria.nome}"></option>
+								</select>
+								<div th:if="${#fields.hasErrors('categoria')}" class="invalid-feedback">
+									<ul>
+										<li th:each="err : ${#fields.errors('categoria')}" th:text="${err}"></li>
+									</ul>
+								</div>
+							</div>
+							<!--Select Menu per Operatori Disponibili-->
+							<div class="col-lg-4 mb-3">
+								<select class="form-select" th:field="*{user}" id="user">
+									<option th:each="user : ${operatori}" th:value="${user.id}" th:text="${user.username}"></option>
+								</select>
+								<div th:if="${#fields.hasErrors('user')}" class="invalid-feedback">
+									<ul>
+										<li th:each="err : ${#fields.errors('user')}" th:text="${err}"></li>
+									</ul>
+								</div>
+							</div>
 						</div>
+						<button type="submit" class="btn btn-outline">Inserisci Ticket</button>
 					</form>
 				</div>
 			</div>

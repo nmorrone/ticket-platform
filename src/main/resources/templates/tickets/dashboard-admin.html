@@ -34,7 +34,7 @@
 			<div class="row-justify-content-center" th:if="${!tickets.isEmpty()}">
 				<div class="col">
 
-					<table th:object="${tickets}">
+					<table th:object="${tickets}" class="table table-hover">
 						<thead>
 							<tr>
 								<th>Id</th>
@@ -46,11 +46,12 @@
 							</tr>
 						</thead>
 						<tbody>
-							<tr each="ticket : ${tickets}">
-								<td th:text="*{id}"></td>
-								<td th:text="*{titolo}"></td>
-								<td th:text="*{categoria}"></td>
-								<td th:text="*{stato}"></td>
+							<tr th:each="ticket : ${tickets}">
+								<td th:text="${ticket.getId()}"></td>
+								<td th:text="${ticket.getTitolo()}"></td>
+								<td th:text="${ticket.categoria.getNome()}"></td>
+								<td th:text="${ticket.stato.getNome()}"></td>
+								<td th:if="${ticket.user} == null"><a th:href="@{/dashboard-admin}" class="btn btn-outline">Assegna</a></td>
 								<!--bottone modifica ticket-->
 								<td sec:authorize="hasAuthority('ADMIN')"><a
 										th:href="@{'/tickets/modifica-ticket/' + ${ticket.id}}" class="btn myButton"
