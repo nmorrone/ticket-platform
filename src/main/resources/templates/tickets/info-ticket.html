@@ -1,0 +1,90 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="~{fragments :: pageHead(Creazione-Ticket)}">
+</head>
+
+<body>
+	<!-- Bootstrap Bundle with Popper -->
+	<script th:src="@{/webjars/bootstrap/5.1.3/js/bootstrap.bundle.min.js}"></script>
+	<header th:insert="~{fragments :: header(admin)}"></header>
+
+	<!--Contenuto Homepage-->
+	<section class="content">
+		<div class="container myContainer col-lg-10 mt-5">
+			<div class="row p-5">
+				<!--Sezione Info Ticket-->
+				<div class="col-lg-8" th:object="${ticket}">
+					<div style="font-style: italic;">Ecco le info sul ticket
+						<hr style="color: orange; width: 50%;">
+					</div>
+					<div class="col mb-5">
+						<h6>Data di Inserimento:</h6>
+						<p th:text="*{dataCreazione}"></p>
+						<h6>Titolo:</h6>
+						<p th:text="*{titolo}"></p>
+						<h6>Categoria:</h6>
+						<p th:text="*{categoria.getNome()}"></p>
+						<h6>Descrizione:</h6>
+						<p th:text="*{descrizione}"></p>
+						<h6>Stato:</h6>
+						<p th:text="*{stato.getNome()}"></p>
+						<h6>Operatore Assegnato:</h6>
+						<p th:text="*{user.getUsername()}"></p>
+						<div th:if="${ticket.stato.getId()} == 2">
+							<p class="small-texts">Hai completato la Lavorazione? Aggiorna lo stato del Ticket</p>
+							<form class="d-grid col-lg-3" th:action="@{'/tickets/completa/' + ${ticket.id}}" method="post">
+								<button class="btn btn-outline btn-sm" type="submit"
+									onclick="return confirm('Sei sicuro di aver completato il Lavoro?')">
+									COMPLETA
+								</button>
+							</form>
+						</div>
+
+					</div>
+					<div class="col">
+						<p style="font-style: italic;">Leggi tutte le Annotazione lasciate relativa alla lavorazione del Ticket</p>
+						<hr style="color: orange; width: 50%;">
+						<ul th:each="nota : ${ticket.getNote()}">
+							<li th:text="${nota.descrizione}"></li>
+						</ul>
+					</div>
+				</div>
+				<!--Sezione Aggiunta Note-->
+				<div class="col-lg-4">
+					<div class="sticky-top" th:object="${nota}">
+						<p>Aggiungi Nota al Ticket</p>
+						<form id="notaForm" th:action="@{/tickets/{id}/aggiungi-nota}" th:object="${nuovaNota}"
+							method="post">
+							<div class="mb-3">
+								<textarea type="text" th:field="*{testo}" id="notaForm" class="form-control">
+								</textarea>
+							</div>
+							<div class="mb-3">
+								<button type="submit" class="btn btn-outline">Aggiungi Nota</button>
+							</div>
+						</form>
+					</div>
+				</div>
+
+			</div>
+			<div class="row p-5">
+				<!--Sezione Elenco Note-->
+				<div class="col">
+
+				</div>
+			</div>
+		</div>
+	</section>
+
+
+
+	<!--Piè di Pagina-->
+	<section>
+		<footer th:insert="fragments :: footer(admin)"></footer>
+	</section>
+
+
+</body>
+
+</html>

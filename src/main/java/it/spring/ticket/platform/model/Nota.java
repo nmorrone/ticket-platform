@@ -42,6 +42,10 @@ public class Nota {
 	@JsonBackReference
 	private Ticket ticket;
 	
+	public Nota() {
+		this.dataInserimento = LocalDate.now();	
+		}
+	
 	//getters and setters
 	public Integer getId() {
 		return id;

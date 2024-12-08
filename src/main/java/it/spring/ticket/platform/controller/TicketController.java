@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import it.spring.ticket.platform.model.Categoria;
+import it.spring.ticket.platform.model.Nota;
 import it.spring.ticket.platform.model.Stato;
 import it.spring.ticket.platform.model.Ticket;
 import it.spring.ticket.platform.model.User;
@@ -111,6 +112,17 @@ public class TicketController {
 		return "tickets/lista-tickets";
 	}
 	
+	//info pagina Ticket Singolo
+	@GetMapping("/tickets/{id}")
+	public String infoTicket(@PathVariable(name="id") Integer id, Model model) {
+		Optional <Ticket> infoTicket = ticketsRepo.findById(id);
+		if(infoTicket.isPresent()) {
+			model.addAttribute("ticket", infoTicket.get());
+			model.addAttribute("nuovaNota", new Nota());
+		}
+		else {}
+		 return "tickets/info-ticket";
+	}
 
 	
 	

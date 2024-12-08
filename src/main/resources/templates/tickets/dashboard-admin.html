@@ -39,7 +39,7 @@
 					<table th:object="${tickets}" class="table table-hover">
 						<thead>
 							<tr>
-								<th>Id</th>
+								<th>Data Inserimento</th>
 								<th>Titolo</th>
 								<th>Categoria</th>
 								<th>Stato</th>
@@ -50,9 +50,8 @@
 						</thead>
 						<tbody>
 							<tr th:each="ticket : ${tickets}">
-								<td th:text="${ticket.getId()}"></td>
-								<td><a
-										th:href="@{'/dashboard-admin/ticket' + ${ticket.getId()}}">[[${ticket.getTitolo()}]]</a>
+								<td th:text="${ticket.getDataCreazione()}"></td>
+								<td><a th:href="@{'tickets/' + ${ticket.getId()}}">[[${ticket.getTitolo()}]]</a>
 								</td>
 								<td th:text="${ticket.categoria.getNome()}"></td>
 								<td th:text="${ticket.stato.getNome()}"></td>
