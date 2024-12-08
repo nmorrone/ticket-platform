@@ -6,6 +6,10 @@ Author: Nicola Morrone
 Author URI: https://instagram.com/nmorronee
 Version: 0.1
 */
+
+.myContainer{	
+	box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px !important;
+}
 p {
 	font-size: 16px;
 }
@@ -35,7 +39,7 @@ a:hover {
 	color: navy !important;
 }
 
-.prezzo{
+.last-td{
 	text-align: center;
 }
 

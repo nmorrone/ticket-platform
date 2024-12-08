@@ -11,8 +11,7 @@
 
 	<!--Contenuto Homepage-->
 	<section class="content">
-		<div class="container col-lg-10 myContainer mt-5"
-			style="box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;">
+		<div class="container myContainer col-lg-10 mt-5">
 			<div class="row pt-5 justify-content-center">
 				<img th:src="@{/img/TicketPlatform-Logo.png}" alt="" style="width: 100px;" />
 			</div>
@@ -50,6 +49,7 @@
 						<div class="row mb-3">
 							<!--Select Menu per Categoria Ticket-->
 							<div class="col-lg-4 mb-3">
+								<label for="categoria">Scegli una Categoria</label>
 								<select class="form-select" th:field="*{categoria}" name="categoria" id="categoria">
 									<option th:each="categoria : ${categorie}" th:value="${categoria.id}" 
 										th:text="${categoria.nome}"></option>
@@ -62,7 +62,9 @@
 							</div>
 							<!--Select Menu per Operatori Disponibili-->
 							<div class="col-lg-4 mb-3">
+								<label for="user">Seleziona un Operatore</label>
 								<select class="form-select" th:field="*{user}" id="user">
+									<option value="">Nessun Operatore Selezionato</option>
 									<option th:each="user : ${operatori}" th:value="${user.id}" th:text="${user.username}"></option>
 								</select>
 								<div th:if="${#fields.hasErrors('user')}" class="invalid-feedback">
@@ -72,7 +74,8 @@
 								</div>
 							</div>
 						</div>
-						<button type="submit" class="btn btn-outline">Inserisci Ticket</button>
+						<div class="row py-3"><div class="d-grid col-4  mx-auto"><button type="submit" class="btn btn-outline">Inserisci Ticket</button></div></div>
+						
 					</form>
 				</div>
 			</div>

@@ -1,19 +1,19 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org">
 
-<head th:replace="~{fragments :: pageHead(admin)}">
+<head th:replace="~{fragments :: pageHead(I-Miei-Tickets)}">
 </head>
 
 <body>
 	<!-- Bootstrap Bundle with Popper -->
 	<script th:src="@{/webjars/bootstrap/5.1.3/js/bootstrap.bundle.min.js}"></script>
-	<header th:insert="~{fragments :: header(admin)}"></header>
+	<header th:insert="~{fragments :: header(tickets)}"></header>
 
 	<!--Contenuto Homepage-->
 	<section class="content p3">
-		<div class="container col-lg-10 myContainer" th:object="${operatore}">
+		<div class="container col-lg-10 myContainer mt-5 pb-5" th:object="${operatore}">
 			<!--Intestazione Pagina-->
-			<div class="row py-5">
+			<div class="row p-5">
 				<div class="col">
 					<h6>Benvenuto <span style="color: orange;" th:text="*{username}"></span></h6>
 					<p class="small-texts">Ecco l'elenco delle tue lavorazioni</p>
@@ -21,26 +21,39 @@
 				</div>
 			</div>
 			<!--Messaggio avviso lista vuota-->
-			<div class="row p-5" th:if="${ticketsOperatore.isEmpty()}">
+			<div class="row p-5" th:if="${tickets.isEmpty()}">
 				<div class="col align-items-center text-center"><span style="color: firebrick">Non è presente Nessun
 						Ticket in Archivio!</span>
 				</div>
 			</div>
-			<div class="row-justify-content-center">
+			<div class="row px-5 justify-content-center" th:if="${!tickets.isEmpty()}" >
 				<div class="col">
-
-					<table th:if="${!ticketsOperatore.isEmpty()}" th:object="${ticketsOperatore}">
+					<table th:object="${tickets}" class="table table-hover">
 						<thead>
 							<tr>
 								<th>Id</th>
 								<th>Titolo</th>
 								<th>Categoria</th>
 								<th>Stato</th>
-								<th>Info</th>
-								<th>Delete</th>
+								<th></th>
 							</tr>
 						</thead>
-						<tbody></tbody>
+						<tbody>
+							<tr th:each="ticket : ${tickets}">
+							<td th:text="${ticket.getId()}"></td>
+							<td th:text="${ticket.getTitolo()}"></td>
+							<td th:text="${ticket.categoria.getNome()}"></td>
+							<td th:text="${ticket.stato.getNome()}"></td>
+							<td class="last-td">
+								<form th:if="${ticket.stato.getId()} == 2"th:action="@{'/tickets/completa/' + ${ticket.id}}" method="post">
+									<button class="btn btn-outline btn-sm" type="submit"
+									onclick="return confirm('Sei sicuro di aver completato il Lavoro?')">
+									COMPLETA
+								</button>
+							</form>
+						</td>
+						</tr>
+						</tbody>
 					</table>
 				</div>
 			</div>

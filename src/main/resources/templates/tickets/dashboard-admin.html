@@ -11,13 +11,15 @@
 
 	<!--Contenuto Homepage-->
 	<section class="content p3">
-		<div class="container col-lg-10 myContainer">
+		<div class="container myContainer col-lg-10 mt-5 pb-5">
 			<!--Messaggio avviso lista vuota-->
 			<div class="row p-5 justify-content-between">
-				<div class="col-lg-6">
-					<a th:href="@{/crea-ticket}" class="btn btn-outline" role="button">Crea Ticket</a>
+				<div class="col">
+					<div class="d-grid col-4">
+						<a th:href="@{/crea-ticket}" class="btn btn-outline" role="button">Crea Ticket</a>
+					</div>
 				</div>
-				<div class="col-lg-6" th:if="${!tickets.isEmpty()}">
+				<div class="col" th:if="${!tickets.isEmpty()}">
 					<form class="d-flex" role="search" th:action="@{/dashboard-admin}" method="get">
 						<input class="form-control me-2" name="keyword" th:value="${keyword}" type="search"
 							placeholder="Ricerca un ticket..." aria-label="Search">
@@ -31,7 +33,7 @@
 						Ticket in Archivio!</span>
 				</div>
 			</div>
-			<div class="row-justify-content-center" th:if="${!tickets.isEmpty()}">
+			<div class="row px-5 justify-content-center" th:if="${!tickets.isEmpty()}">
 				<div class="col">
 
 					<table th:object="${tickets}" class="table table-hover">
@@ -41,22 +43,27 @@
 								<th>Titolo</th>
 								<th>Categoria</th>
 								<th>Stato</th>
-								<th>Info</th>
-								<th>Delete</th>
+								<th>Operatore</th>
+								<th></th>
+								<th></th>
 							</tr>
 						</thead>
 						<tbody>
 							<tr th:each="ticket : ${tickets}">
 								<td th:text="${ticket.getId()}"></td>
-								<td th:text="${ticket.getTitolo()}"></td>
+								<td><a
+										th:href="@{'/dashboard-admin/ticket' + ${ticket.getId()}}">[[${ticket.getTitolo()}]]</a>
+								</td>
 								<td th:text="${ticket.categoria.getNome()}"></td>
 								<td th:text="${ticket.stato.getNome()}"></td>
-								<td th:if="${ticket.user} == null"><a th:href="@{/dashboard-admin}" class="btn btn-outline">Assegna</a></td>
+								<td th:if="${ticket.user} == null"><a th:href="@{/dashboard-admin}"
+										class="btn btn-outline">Assegna</a></td>
+								<td th:if="${ticket.user} != null" th:text="${ticket.user.getUsername}"></td>
 								<!--bottone modifica ticket-->
-								<td sec:authorize="hasAuthority('ADMIN')"><a
+								<td sec:authorize="hasAuthority('ADMIN')" class="last-td"><a
 										th:href="@{'/tickets/modifica-ticket/' + ${ticket.id}}" class="btn myButton"
 										role="button"><i class="fas fa-pen fa-xs"></i></a></td>
-								<td sec:authorize="hasAuthority('ADMIN')">
+								<td sec:authorize="hasAuthority('ADMIN')" class="last-td">
 									<!--bottone rimuovi ticket-->
 									<form th:action="@{'/tickets/rimuovi/' + ${ticket.id}}" method="post">
 										<button class="btn myButton" type="submit"

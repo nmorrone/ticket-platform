@@ -67,9 +67,9 @@ public class TicketController {
 		ticketsRepo.deleteById(id);
 		return "redirect:/tickets";
 	}
-	//Paginainserimento nuovo ticket ADMIN
+	//display pagina inserimento nuovo ticket ADMIN
 	@GetMapping("/crea-ticket")
-	public String creazioneTicket (Model model) {	
+	public String creaTicket(Model model) {	
 		List <User> operatori = new ArrayList<>();		
 		for(User user : userRepo.findAll()) {
 			if(user.isDisponibile() == true)  {
@@ -82,6 +82,7 @@ public class TicketController {
 		return "tickets/crea-ticket";
 		
 	}
+	//salvataggio nuovo Ticket ADMIN
 	@PostMapping("/crea-ticket")
 	public String storeTicket(@Valid @ModelAttribute("ticket") Ticket ticketForm, BindingResult bindingResults, Model model) {
 			if(bindingResults.hasErrors()) {
@@ -101,11 +102,10 @@ public class TicketController {
 	//visualizzazione tickets OPERATORE
 	@GetMapping("/tickets")
 	public String listaTicketsOperatore(Authentication authentication, Model model) {
-		
 		Optional<User> loggedUser = userRepo.findByUsername(authentication.getName());
 		User operatore = loggedUser.get();
 		List <Ticket> ticketsOperatore = operatore.getTickets();
-		model.addAttribute("ticketsOperatore", ticketsOperatore);
+		model.addAttribute("tickets", ticketsOperatore);
 		model.addAttribute("operatore", operatore);
 		
 		return "tickets/lista-tickets";

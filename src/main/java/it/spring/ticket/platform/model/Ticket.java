@@ -50,7 +50,7 @@ public class Ticket {
 	private Stato stato;
 	// entity relationship 1to1
 	@ManyToOne
-	@JoinColumn(name = "user_id", nullable = false)
+	@JoinColumn(name = "user_id", nullable = true)
 	@JsonBackReference
 	private User user;
 	// entity relationship 1 to Many
