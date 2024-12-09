@@ -60,7 +60,7 @@
 								<td th:if="${ticket.user} != null" th:text="${ticket.user.getUsername}"></td>
 								<!--bottone modifica ticket-->
 								<td sec:authorize="hasAuthority('ADMIN')" class="last-td"><a
-										th:href="@{'/tickets/modifica-ticket/' + ${ticket.id}}" class="btn myButton"
+										th:href="@{'/modifica-ticket/' + ${ticket.id}}" class="btn myButton"
 										role="button"><i class="fas fa-pen fa-xs"></i></a></td>
 								<td sec:authorize="hasAuthority('ADMIN')" class="last-td">
 									<!--bottone rimuovi ticket-->

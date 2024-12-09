@@ -68,6 +68,7 @@ public class TicketController {
 		ticketsRepo.deleteById(id);
 		return "redirect:/tickets";
 	}
+	
 	//display pagina inserimento nuovo ticket ADMIN
 	@GetMapping("/crea-ticket")
 	public String creaTicket(Model model) {	
@@ -100,6 +101,34 @@ public class TicketController {
 			return "redirect:/dashboard-admin";
 	}
 	
+	//metodo visualizzazione Ticket per Modifiche ADMIN
+	@GetMapping("/modifica-ticket/{id}")
+	public String modificaTicket(@PathVariable(name="id") Integer id, Model model) {
+		Optional <Ticket> ticketModifica = ticketsRepo.findById(id);
+		List <User> operatori = new ArrayList<>();		
+		for(User user : userRepo.findAll()) {
+			if(user.isDisponibile() == true)  {
+				operatori.add(user);
+			}
+		}
+		model.addAttribute("ticket", ticketModifica);
+		model.addAttribute("operatori", operatori);
+		model.addAttribute("categorie", categorieRepo.findAll());
+		model.addAttribute("modifica", true);
+		return "tickets/crea-ticket";
+	}
+	//metodo salva modifiche Ticket ADMIN
+	@PostMapping("/modifica-ticket/{id}")
+	public String aggiornaTicket(@PathVariable(name="id") Integer id,Ticket ticketForm,BindingResult bindingResults, Model model) {
+		
+		if(bindingResults.hasErrors()) {
+			return "tickets/crea-ticket";
+		}
+		
+		ticketsRepo.save(ticketForm);
+		return "redirect:/dashboard-admin";
+	}
+	
 	//visualizzazione tickets OPERATORE
 	@GetMapping("/tickets")
 	public String listaTicketsOperatore(Authentication authentication, Model model) {
@@ -116,18 +145,16 @@ public class TicketController {
 	@GetMapping("/tickets/{id}")
 	public String infoTicket(Authentication authentication,@PathVariable(name="id") Integer id, Model model) {
 		Optional <Ticket> infoTicket = ticketsRepo.findById(id);
-		Optional<User> loggedUser = userRepo.findByUsername(authentication.getName());
 		if(infoTicket.isPresent()) {
-			Nota nuovaNota = new Nota();
-			nuovaNota.setTicket(infoTicket.get());
-			nuovaNota.setUser(loggedUser.get());
-			model.addAttribute("ticket", infoTicket.get());
-			model.addAttribute("nuovaNota", nuovaNota);
+			Ticket ticketForm = infoTicket.get();			
+			Nota notaForm = new Nota();
+			notaForm.setTicket(ticketForm);
+			notaForm.setUser(userRepo.findByUsername(authentication.getName()).get());
+			model.addAttribute("ticket", ticketForm);
+			model.addAttribute("notaForm", notaForm);
 		}
 		else {}
 		 return "tickets/info-ticket";
 	}
-
-	
 	
 }

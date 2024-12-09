@@ -23,7 +23,8 @@
 			<div class="row p-5">
 				<div class="col">
 					<!--Form inserimento ticket-->
-					<form id="ticketForm" th:object="${ticket}" th:action="@{/crea-ticket}" method="post">
+					<form id="ticketForm" th:object="${ticket}" th:action="${modifica} == true ? @{/modifica-ticket} :
+					 @{/crea-ticket}" method="post">
 						<!--Titolo-->
 						<div class="row mb-3">
 							<label for="titolo" class="form-label">Titolo</label>
@@ -74,7 +75,10 @@
 								</div>
 							</div>
 						</div>
-						<div class="row py-3"><div class="d-grid col-4  mx-auto"><button type="submit" class="btn btn-outline">Inserisci Ticket</button></div></div>
+						<div class="row py-3">
+							<div class="d-grid col-4  mx-auto"><button type="submit" class="btn btn-outline" th:text="${modifica} == true ? 'Aggiorna Modifiche' : 'Inserisci Ticket'"></button>
+							</div>
+						</div>
 						
 					</form>
 				</div>

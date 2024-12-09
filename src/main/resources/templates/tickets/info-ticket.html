@@ -9,13 +9,13 @@
 	<script th:src="@{/webjars/bootstrap/5.1.3/js/bootstrap.bundle.min.js}"></script>
 	<header th:insert="~{fragments :: header(admin)}"></header>
 
-	<!--Contenuto Homepage-->
+	<!--Contenuto-->
 	<section class="content">
 		<div class="container myContainer col-lg-10 mt-5">
 			<div class="row p-5">
-				<!--Sezione Info Ticket-->
+				<!--Sezione Info Ticket / Colonna SX-->
 				<div class="col-lg-8" th:object="${ticket}">
-					<div style="font-style: italic;">Ecco le info sul ticket
+					<div style="font-style: italic;">Ecco tutte le Informazione del Ticket
 						<hr style="color: orange; width: 50%;">
 					</div>
 					<div class="col mb-5">
@@ -33,7 +33,8 @@
 						<p th:text="*{user.getUsername()}"></p>
 						<div th:if="${ticket.stato.getId()} == 2">
 							<p class="small-texts">Hai completato la Lavorazione? Aggiorna lo stato del Ticket</p>
-							<form class="d-grid col-lg-3" th:action="@{'/tickets/completa/' + ${ticket.id}}" method="post">
+							<form class="d-grid col-lg-3" th:action="@{'/tickets/completa/' + ${ticket.id}}"
+								method="post">
 								<button class="btn btn-outline btn-sm" type="submit"
 									onclick="return confirm('Sei sicuro di aver completato il Lavoro?')">
 									COMPLETA
@@ -42,28 +43,75 @@
 						</div>
 
 					</div>
-					<div class="col">
-						<p style="font-style: italic;">Leggi tutte le Annotazione lasciate relativa alla lavorazione del Ticket</p>
-						<hr style="color: orange; width: 50%;">
-						<ul th:each="nota : ${ticket.getNote()}">
-							<li th:text="${nota.descrizione}"></li>
-						</ul>
-					</div>
 				</div>
-				<!--Sezione Aggiunta Note-->
-				<div class="col-lg-4">
-					<div class="sticky-top" th:object="${nota}">
-						<p>Aggiungi Nota al Ticket</p>
-						<form id="notaForm" th:action="@{/tickets/{id}/aggiungi-nota}" th:object="${nuovaNota}"
-							method="post">
-							<div class="mb-3">
-								<textarea type="text" th:field="*{testo}" id="notaForm" class="form-control">
-								</textarea>
+				<!--Sezione Annotazioni / Colonna DX-->
+				<div class="col-lg-4" th:object="${ticket}">
+					<div class="sticky-top">
+						<!--Logo-->
+						<div class="mb-3 text-center">
+							<div class="col mb-3"><img th:src="@{/img/TicketPlatform-Logo.png}" alt=""
+									style="width: 100px;" /></div>
+							<p class="small-texts">Clicca "Visualizza Note" per visualizzare tutte le annotazione
+								rilasciate relative al Ticket</p>
+							<!-- Trigger Button Modale -->
+							<button type="button" class="btn btn-outline" data-bs-toggle="modal"
+								data-bs-target="#staticBackdrop">
+								Visualizza le Note
+							</button>
+						</div>
+						<!-- Modal Window -->
+						<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false"
+							tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+							<div class="modal-dialog modal-lg">
+								<div class="modal-content p-5">
+									<div class="modal-header">
+										<h1 class="modal-title fs-5" id="staticBackdropLabel">Sezione Note</h1>
+										<button type="button" class="btn-close" data-bs-dismiss="modal"
+											aria-label="Close"></button>
+									</div>
+									<div class="modal-body">
+										<p class="small-texts">Ecco tutte le annotazioni relativa al Ticket</p>
+										<div th:if="${ticket.note.isEmpty()}">
+											<span style="color: firebrick;">Non c'è nessuna annotazione relativa al
+												Ticket</span>
+										</div>
+										<div th:if="${!ticket.note.isEmpty()}" th:each="nota : ${ticket.getNote()}">
+											<h6>Data:</h6>
+											<p th:text="${nota.dataInserimento}"></p>
+											<h6>Autore:</h6>
+											<p th:text="${nota.user.getUsername()}"></p>
+											<h6>Messaggio:</h6>
+											<p th:text="${nota.testo}"></p>
+											<hr style="color: orange;">
+										</div>
+										<!--Aggiungi Note nel Modal-->
+										<div class="col">
+											<p>Vuoi aggiungire un'Annotazione al Ticket?</p>
+											<form id="notaForm" th:action="@{/aggiungi-nota}" th:object="${notaForm}"
+												method="post">
+												<div class="mb-3">
+													<textarea type="text" th:field="*{testo}" id="testo"
+														class="form-control">
+																		</textarea>
+												</div>
+												<div class="mb-3">
+													<input type="hidden" id="user" th:field="*{user}">
+													<input type="hidden" id="ticket" th:field="*{ticket}">
+													<button type="submit" class="btn btn-outline"
+														onclick="return confirm('Sei sicuro di voler inserire la Nota?')">Aggiungi
+														Nota</button>
+												</div>
+											</form>
+										</div>
+									</div>
+									<div class="modal-footer">
+										<button type="button" class="btn btn-outline"
+											data-bs-dismiss="modal">Close</button>
+										<button type="button" class="btn btn-outline">Understood</button>
+									</div>
+								</div>
 							</div>
-							<div class="mb-3">
-								<button type="submit" class="btn btn-outline">Aggiungi Nota</button>
-							</div>
-						</form>
+						</div>
 					</div>
 				</div>
 
