@@ -114,11 +114,15 @@ public class TicketController {
 	
 	//info pagina Ticket Singolo
 	@GetMapping("/tickets/{id}")
-	public String infoTicket(@PathVariable(name="id") Integer id, Model model) {
+	public String infoTicket(Authentication authentication,@PathVariable(name="id") Integer id, Model model) {
 		Optional <Ticket> infoTicket = ticketsRepo.findById(id);
+		Optional<User> loggedUser = userRepo.findByUsername(authentication.getName());
 		if(infoTicket.isPresent()) {
+			Nota nuovaNota = new Nota();
+			nuovaNota.setTicket(infoTicket.get());
+			nuovaNota.setUser(loggedUser.get());
 			model.addAttribute("ticket", infoTicket.get());
-			model.addAttribute("nuovaNota", new Nota());
+			model.addAttribute("nuovaNota", nuovaNota);
 		}
 		else {}
 		 return "tickets/info-ticket";
