@@ -55,8 +55,10 @@
 								</td>
 								<td th:text="${ticket.categoria.getNome()}"></td>
 								<td th:text="${ticket.stato.getNome()}"></td>
-								<td th:if="${ticket.user} == null"><a th:href="@{/dashboard-admin}"
-										class="btn btn-outline">Assegna</a></td>
+								<td th:if="${ticket.user} == null">
+									<!-- Trigger Button Modale -->
+									<a th:href="@{/modifica-ticket/{id} (id=${ticket.getId()})}" class="btn btn-outline">Assegna</a>
+								</td>
 								<td th:if="${ticket.user} != null" th:text="${ticket.user.getUsername}"></td>
 								<!--bottone modifica ticket-->
 								<td sec:authorize="hasAuthority('ADMIN')" class="last-td"><a

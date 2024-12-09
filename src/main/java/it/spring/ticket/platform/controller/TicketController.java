@@ -48,7 +48,7 @@ public class TicketController {
 	//visualizzazione tickets ADMIN
 	@GetMapping("/dashboard-admin")
 	public String listaTickets(Authentication authentication, @RequestParam(name="keyword", required = false) String keyword,Model model) {
-
+		List <User> operatori = new ArrayList<>();
 		List <Ticket> listaTickets;
 		if(keyword!=null && !keyword.isBlank()) {
 			listaTickets = ticketsRepo.findByTitoloContaining(keyword);
@@ -57,7 +57,13 @@ public class TicketController {
 		else {
 			listaTickets = ticketsRepo.findAll();
 		}
+		for(User user : userRepo.findAll()) {
+			if(user.isDisponibile() == true)  {
+				operatori.add(user);
+			}
+		}
 		model.addAttribute("tickets", listaTickets);
+		model.addAttribute("operatori", operatori);
 		return "tickets/dashboard-admin";
 		
 	}

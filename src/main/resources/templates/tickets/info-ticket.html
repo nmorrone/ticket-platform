@@ -53,11 +53,11 @@
 									style="width: 100px;" /></div>
 							<p class="small-texts">Clicca "Visualizza Note" per visualizzare tutte le annotazione
 								rilasciate relative al Ticket</p>
-							<!-- Trigger Button Modale -->
-							<button type="button" class="btn btn-outline" data-bs-toggle="modal"
-								data-bs-target="#staticBackdrop">
-								Visualizza le Note
-							</button>
+							
+						<!-- Trigger Button Modale -->
+						<button type="button" class="btn btn-outline" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+							Visualizza le Note
+						</button>
 						</div>
 						<!-- Modal Window -->
 						<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false"
@@ -65,12 +65,11 @@
 							<div class="modal-dialog modal-lg">
 								<div class="modal-content p-5">
 									<div class="modal-header">
-										<h1 class="modal-title fs-5" id="staticBackdropLabel">Sezione Note</h1>
+										<h1 class="modal-title fs-5 small-texts" id="staticBackdropLabel">Lista Annotazioni Lavorazione Ticket</h1>
 										<button type="button" class="btn-close" data-bs-dismiss="modal"
 											aria-label="Close"></button>
 									</div>
 									<div class="modal-body">
-										<p class="small-texts">Ecco tutte le annotazioni relativa al Ticket</p>
 										<div th:if="${ticket.note.isEmpty()}">
 											<span style="color: firebrick;">Non c'è nessuna annotazione relativa al
 												Ticket</span>
@@ -105,9 +104,8 @@
 										</div>
 									</div>
 									<div class="modal-footer">
-										<button type="button" class="btn btn-outline"
-											data-bs-dismiss="modal">Close</button>
-										<button type="button" class="btn btn-outline">Understood</button>
+										<button type="button" class="btn btn-primary"
+											data-bs-dismiss="modal">Chiudi</button>
 									</div>
 								</div>
 							</div>
