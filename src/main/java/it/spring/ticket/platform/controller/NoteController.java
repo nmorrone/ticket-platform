@@ -5,6 +5,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -19,6 +20,7 @@ public class NoteController {
 	@Autowired
 	private NoteRepository noteRepo;
 	
+	//metodo CREATE Nota su Ticket Specifico
 	@PostMapping("/aggiungi-nota")
 	public String storeNota(@Valid @ModelAttribute("notaForm") Nota notaForm,BindingResult bindingResults, Model model) {
 		if(bindingResults.hasErrors()) {
@@ -29,5 +31,11 @@ public class NoteController {
 		return"redirect:/tickets/" + notaForm.getTicket().getId();		
 	}
 	
+	//metodo REMOVE Nota da Ticket Specifico
+	@PostMapping("/rimuovi-nota/{id}")
+	public String rimozioneNota(@PathVariable Integer id) {
+		noteRepo.deleteById(id);
+		return "redirect:/tickets";
+	}
 
 }
