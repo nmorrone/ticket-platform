@@ -47,12 +47,23 @@ a:hover {
 	border: 1px solid orange;
 	color: orange;
 }
-
 .btn-outline:hover{
 	border: 1px solid orange;
 	background-color: orange;
 	color: #fff;
 }
+
+.btn-outline-2 {
+	border: 1px solid firebrick;
+	color: firebrick;
+}
+.btn-outline-2:hover{
+	border: 1px solid firebrick;
+	background-color: firebrick;
+	color: #fff;
+}
+
+
 
 .dropdown:hover .dropdown-menu {
     display: block;
