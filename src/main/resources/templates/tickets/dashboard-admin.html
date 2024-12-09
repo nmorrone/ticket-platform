@@ -66,7 +66,7 @@
 										role="button"><i class="fas fa-pen fa-xs"></i></a></td>
 								<td sec:authorize="hasAuthority('ADMIN')" class="last-td">
 									<!--bottone rimuovi ticket-->
-									<form th:action="@{'/tickets/rimuovi/' + ${ticket.id}}" method="post">
+									<form th:action="@{'/rimuovi-ticket/' + ${ticket.id}}" method="post">
 										<button class="btn myButton" type="submit"
 											onclick="return confirm('Sei sicuro di voler eliminare il Ticket di Assistenza?')">
 											<i class="fas fa-trash fa-xs"></i>

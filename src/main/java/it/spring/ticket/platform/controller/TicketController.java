@@ -72,7 +72,7 @@ public class TicketController {
 	@PostMapping("/rimuovi-ticket/{id}")
 	public String rimozioneTicket(@PathVariable Integer id) {
 		ticketsRepo.deleteById(id);
-		return "redirect:/tickets";
+		return "redirect:/dashboard-admin";
 	}
 	
 	//display pagina inserimento nuovo ticket ADMIN
@@ -165,7 +165,9 @@ public class TicketController {
 			model.addAttribute("ticket", ticketForm);
 			model.addAttribute("notaForm", notaForm);
 		}
-		else {}
+		else {
+			//codice per Eccezione - Pagina 404
+		}
 		 return "tickets/info-ticket";
 	}
 	

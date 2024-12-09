@@ -53,7 +53,7 @@
 									class="btn btn-outline">Modifica Dati</a>
 							</div>
 							<div class="col-lg-4 d-grid">
-								<form th:action="@{'/tickets/rimuovi/' + ${ticket.id}}" method="post">
+								<form th:action="@{'/rimuovi-ticket/' + ${ticket.id}}" method="post">
 									<button class="btn btn-outline-2" type="submit"
 										onclick="return confirm('Sei sicuro di voler eliminare il Ticket di Assistenza?')">
 										Elimina
