@@ -23,7 +23,7 @@
 			<div class="row p-5">
 				<div class="col">
 					<!--Form inserimento ticket-->
-					<form id="ticketForm" th:object="${ticket}" th:action="${modifica} == true ? @{/modifica-ticket} :
+					<form id="ticketForm" th:object="${ticket}"  th:action="${modifica} == true ? @{'/modifica-ticket/'+ ${ticket.getId()}} :
 					 @{/crea-ticket}" method="post">
 						<!--Titolo-->
 						<div class="row mb-3">

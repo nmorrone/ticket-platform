@@ -117,7 +117,7 @@ public class TicketController {
 				operatori.add(user);
 			}
 		}
-		model.addAttribute("ticket", ticketModifica);
+		model.addAttribute("ticket", ticketModifica.get());
 		model.addAttribute("operatori", operatori);
 		model.addAttribute("categorie", categorieRepo.findAll());
 		model.addAttribute("modifica", true);
@@ -125,10 +125,16 @@ public class TicketController {
 	}
 	//metodo salva modifiche Ticket ADMIN
 	@PostMapping("/modifica-ticket/{id}")
-	public String aggiornaTicket(@PathVariable(name="id") Integer id,Ticket ticketForm,BindingResult bindingResults, Model model) {
+	public String aggiornaTicket(@PathVariable(name="id") Integer id,@Valid @ModelAttribute("ticket") Ticket ticketForm,BindingResult bindingResults, Model model) {
 		
 		if(bindingResults.hasErrors()) {
 			return "tickets/crea-ticket";
+		}
+		else if(ticketForm.getUser() == null) {
+			ticketForm.setStato(statiRepo.findById(1).get());
+		}
+		else if (ticketForm.getUser() != null) {
+		ticketForm.setStato(statiRepo.findById(2).get());
 		}
 		
 		ticketsRepo.save(ticketForm);
