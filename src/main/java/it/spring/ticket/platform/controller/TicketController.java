@@ -171,4 +171,14 @@ public class TicketController {
 		 return "tickets/info-ticket";
 	}
 	
+	//metodo aggiorno stato Ticket
+	@PostMapping("/completa-ticket/tickets/{id}")
+	public String completaLavorazioneTicket(@PathVariable(name="id") Integer id) {
+		Ticket ticketCompletato = ticketsRepo.findById(id).get();
+		ticketCompletato.setStato(statiRepo.findById(3).get());
+		ticketsRepo.save(ticketCompletato);
+		return "redirect:/tickets/" + id;
+		
+	}
+	
 }

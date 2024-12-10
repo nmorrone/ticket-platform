@@ -1,0 +1,74 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="~{fragments :: pageHead(Il-Mio-Profilo)}">
+</head>
+
+<body>
+	<!-- Bootstrap Bundle with Popper -->
+	<script th:src="@{/webjars/bootstrap/5.1.3/js/bootstrap.bundle.min.js}"></script>
+	<header th:insert="~{fragments :: header(profilo)}"></header>
+
+	<!--Contenuto Homepage-->
+	<section class="content p3">
+		<div class="container col-lg-10 myContainer mt-5 pb-5">
+			<div class="row p-5">
+				<!--Colonna SX-->
+				<div class="col-lg-7" th:object="${user}">
+					<h6 style="color: orange;">Le mie Info:</h6>
+					<p><strong>Username</strong><br>
+						<span th:text="*{username}" style="font-style: italic;"></span>
+					</p>
+					<p><strong>Password:</strong><br>
+						<span th:text="*{password}" style="font-style: italic;"></span>
+					</p>
+					<p><strong>Stato:</strong><br>
+						<span th:text="${user.disponibile} == true ? 'Sono Disponibile' : 'Non Disponibile'"
+							style="font-style: italic;"></span>
+					</p>
+					<p><strong>Privilegi Utente</strong><br>
+						<span sec:authentication="principal.authorities" style="font-style: italic;"></span>
+					</p>
+					<p style="color: orange;">Le mie Lavorazioni</p>
+					<hr style="color: orange;">
+					<table th:object="${tickets}" class="table table-borderless">
+						<thead>
+
+						</thead>
+						<tbody>
+							<tr th:each="ticket : ${user.getTickets()}">
+								<td><a th:href="@{'tickets/' + ${ticket.getId()}}">[[${ticket.getTitolo()}]]</a>
+								</td>
+								<td th:text="${ticket.stato.getNome()}"></td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+				<!--Colonna DX-->
+				<div class="col-lg-4" th:object="${ticket}">
+					<div class="sticky-top">
+						<!--Logo-->
+						<div class="mb-3 text-center">
+							<div class="col mb-3"><img th:src="@{/img/TicketPlatform-Logo.png}" alt=""
+									style="width: 100px;" /></div>
+							<p class="small-texts">Hai Completato il tuo Lavoro?<br>Aggiorna il tuo Stato</p>
+						</div>
+					</div>
+				</div>
+
+			</div>
+
+		</div>
+	</section>
+
+
+
+	<!--Piè di Pagina-->
+	<section>
+		<footer th:insert="fragments :: footer(admin)"></footer>
+	</section>
+
+
+</body>
+
+</html>

@@ -45,7 +45,7 @@
 							<td th:text="${ticket.categoria.getNome()}"></td>
 							<td th:text="${ticket.stato.getNome()}"></td>
 							<td class="last-td">
-								<form th:if="${ticket.stato.getId()} == 2"th:action="@{'/tickets/completa/' + ${ticket.id}}" method="post">
+								<form th:if="${ticket.stato.getId()} == 2"th:action="@{'/completa-ticket/tickets/' + ${ticket.id}}" method="post">
 									<button class="btn btn-outline btn-sm" type="submit"
 									onclick="return confirm('Sei sicuro di aver completato il Lavoro?')">
 									COMPLETA

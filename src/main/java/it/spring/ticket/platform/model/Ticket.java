@@ -30,7 +30,7 @@ public class Ticket {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 	@NotNull(message = "Inserisci la data di creazione del Ticket")
-	@FutureOrPresent(message = "La data non può essere antecedente ad oggi")
+	//@FutureOrPresent(message = "La data non può essere antecedente ad oggi")
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private LocalDate dataCreazione;
 	@NotBlank(message = "Inserisci un titolo al Ticket")

@@ -34,7 +34,7 @@
 						<hr style="color: orange;">
 						<div sec:authorize="hasAuthority('USER')" th:if="${ticket.stato.getId()} == 2">
 							<p class="small-texts">Hai completato la Lavorazione? Aggiorna lo stato del Ticket</p>
-							<form class="d-grid col-lg-3" th:action="@{'/tickets/completa/' + ${ticket.id}}"
+							<form class="d-grid col-lg-3" th:action="@{'/completa-ticket/tickets/' + ${ticket.id}}"
 								method="post">
 								<button class="btn btn-outline btn-sm" type="submit"
 									onclick="return confirm('Sei sicuro di aver completato il Lavoro?')">
@@ -113,7 +113,7 @@
 												method="post">
 												<div class="mb-3">
 													<textarea type="text" th:field="*{testo}" id="testo"
-														class="form-control">
+														class="form-control" required>
 																		</textarea>
 												</div>
 												<div class="mb-3">

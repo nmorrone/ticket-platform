@@ -51,8 +51,8 @@
 							<!--Select Menu per Categoria Ticket-->
 							<div class="col-lg-4 mb-3">
 								<label for="categoria">Scegli una Categoria</label>
-								<select class="form-select" th:field="*{categoria}" name="categoria" id="categoria">
-									<option th:each="categoria : ${categorie}" th:value="${categoria.id}" 
+								<select class="form-select" th:field="*{categoria}" name="categoria" th:errorClass="is-invalid" required>
+									<option th:each="categoria : ${categorie}" th:value="${categoria.id}"
 										th:text="${categoria.nome}"></option>
 								</select>
 								<div th:if="${#fields.hasErrors('categoria')}" class="invalid-feedback">
@@ -64,7 +64,7 @@
 							<!--Select Menu per Operatori Disponibili-->
 							<div class="col-lg-4 mb-3">
 								<label for="user">Seleziona un Operatore</label>
-								<select class="form-select" th:field="*{user}" id="user">
+								<select class="form-select" th:field="*{user}" th:errorClass="is-invalid" required>
 									<option value="">Nessun Operatore Selezionato</option>
 									<option th:each="user : ${operatori}" th:value="${user.id}" th:text="${user.username}"></option>
 								</select>
