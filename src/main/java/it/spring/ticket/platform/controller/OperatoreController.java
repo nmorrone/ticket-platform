@@ -51,5 +51,13 @@ public class OperatoreController {
 		model.addAttribute("user", utente);
 		return "utenti/il-mio-profilo";
 	}
+	
+	//metodo POST Mapping
+	public String nonDisponibileOperatore(@PathVariable(name="id") Integer id) {
+		User userStacca = userRepo.findById(id).get();
+		userStacca.setDisponibile(false);
+		userRepo.save(userStacca);
+		return "redirect/il-mio-profilo";
+	}
 
 }
