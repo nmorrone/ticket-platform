@@ -34,8 +34,10 @@ public class NoteController {
 	//metodo REMOVE Nota da Ticket Specifico
 	@PostMapping("/rimuovi-nota/{id}")
 	public String rimozioneNota(@PathVariable Integer id) {
-		noteRepo.deleteById(id);
-		return "redirect:/tickets";
+		Nota notaRedirect = noteRepo.findById(id).get();
+		Integer redirect = notaRedirect.getTicket().getId();
+		noteRepo.deleteById(id);	
+		return "redirect:/tickets/" + redirect;
 	}
 
 }

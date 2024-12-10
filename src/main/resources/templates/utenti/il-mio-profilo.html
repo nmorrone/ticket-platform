@@ -43,7 +43,14 @@
 							</tr>
 						</tbody>
 					</table>
+					<!--sezione di modifica per ADMIN-->
+					<div sec:authorize="hasAuthority('ADMIN')">
+						<p>Hai bisogno di modificare i tuoi dati di accesso?</p>
+						<a th:href="@{/modifica-profilo/{id} (id=${user.getId()})}" class="btn btn-outline">Modifica Profilo</a>
+						
+					</div>
 				</div>
+
 				<!--Colonna DX-->
 				<div class="col-lg-4" th:object="${ticket}">
 					<div class="sticky-top">
@@ -51,7 +58,11 @@
 						<div class="mb-3 text-center">
 							<div class="col mb-3"><img th:src="@{/img/TicketPlatform-Logo.png}" alt=""
 									style="width: 100px;" /></div>
-							<p class="small-texts">Hai Completato il tuo Lavoro?<br>Aggiorna il tuo Stato</p>
+							
+						</div>
+						<div>
+						<p class="small-texts">Hai Completato il tuo Lavoro?<br>Aggiorna il tuo Stato</p>
+						<button th:action=""
 						</div>
 					</div>
 				</div>

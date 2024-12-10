@@ -53,6 +53,7 @@ public class OperatoreController {
 	}
 	
 	//metodo POST Mapping
+	@PostMapping("/aggiorna-stato/{id}")
 	public String nonDisponibileOperatore(@PathVariable(name="id") Integer id) {
 		User userStacca = userRepo.findById(id).get();
 		userStacca.setDisponibile(false);

@@ -47,19 +47,19 @@
 								<p style="font-style: italic;">Hai bisogno di modificare i dati del Ticket?</p>
 							</div>
 							<div class="row mt-3">
-							<div class="col-lg-4 d-grid">
+								<div class="col-lg-4 d-grid">
 
-								<a th:href="@{/modifica-ticket/{id} (id=${ticket.getId()})}"
-									class="btn btn-outline">Modifica Dati</a>
-							</div>
-							<div class="col-lg-4 d-grid">
-								<form th:action="@{'/rimuovi-ticket/' + ${ticket.id}}" method="post">
-									<button class="btn btn-outline-2" type="submit"
-										onclick="return confirm('Sei sicuro di voler eliminare il Ticket di Assistenza?')">
-										Elimina
-									</button>
-								</form>
-							</div>
+									<a th:href="@{/modifica-ticket/{id} (id=${ticket.getId()})}"
+										class="btn btn-outline">Modifica Dati</a>
+								</div>
+								<div class="col-lg-4 d-grid">
+									<form th:action="@{'/rimuovi-ticket/' + ${ticket.id}}" method="post">
+										<button class="btn btn-outline-2" type="submit"
+											onclick="return confirm('Sei sicuro di voler eliminare il Ticket di Assistenza?')">
+											Elimina
+										</button>
+									</form>
+								</div>
 							</div>
 						</div>
 
@@ -104,6 +104,16 @@
 											<p th:text="${nota.user.getUsername()}"></p>
 											<h6>Messaggio:</h6>
 											<p th:text="${nota.testo}"></p>
+											<div sec:authorize="hasAuthority('ADMIN')">
+												Vuoi rimuovere la nota?
+												<form th:action="@{'/rimuovi-nota/' + ${nota.getId()}}"
+													method="post">
+													<button class="btn btn-outline" type="submit"
+														onclick="return confirm('Sei sicuro di voler eliminare il Ticket di Assistenza?')">
+														Rimuovi
+													</button>
+												</form>
+											</div>
 											<hr style="color: orange;">
 										</div>
 										<!--Aggiungi Note nel Modal-->
