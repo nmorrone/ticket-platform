@@ -29,6 +29,7 @@
 					<p><strong>Privilegi Utente</strong><br>
 						<span sec:authentication="principal.authorities" style="font-style: italic;"></span>
 					</p>
+					<div th:if="${!user.tickets.isEmpty()}">
 					<p style="color: orange;">Le mie Lavorazioni</p>
 					<hr style="color: orange;">
 					<table th:object="${tickets}" class="table table-borderless">
@@ -43,11 +44,13 @@
 							</tr>
 						</tbody>
 					</table>
+					</div>
 					<!--sezione di modifica per ADMIN-->
 					<div sec:authorize="hasAuthority('ADMIN')">
 						<p>Hai bisogno di modificare i tuoi dati di accesso?</p>
-						<a th:href="@{/modifica-profilo/{id} (id=${user.getId()})}" class="btn btn-outline">Modifica Profilo</a>
-						
+						<a th:href="@{/modifica-profilo/{id} (id=${user.getId()})}" class="btn btn-outline">Modifica
+							Profilo</a>
+
 					</div>
 				</div>
 
@@ -58,11 +61,22 @@
 						<div class="mb-3 text-center">
 							<div class="col mb-3"><img th:src="@{/img/TicketPlatform-Logo.png}" alt=""
 									style="width: 100px;" /></div>
-							
+
 						</div>
-						<div>
-						<p class="small-texts">Hai Completato il tuo Lavoro?<br>Aggiorna il tuo Stato</p>
-						<button th:action=""
+						<div th:if="${nonDisponibile} == false" class="text-center">
+							<span style="color: firebrick;">Mi dispiace ma non potrai aggiornare il tuo Stato finché non
+								completi tutti i Ticket rimasti in lavorazione</span>
+
+						</div>
+						<div th:if="${nonDisponibile} == true" class="text-center">
+							<p class="small-texts">Congratulazione! <br>Hai Completato il tuo Lavoro?<br>Aggiorna subito
+								il tuo Stato</p>
+							<form th:action="@{'/aggiorna-stato/' + ${user.getId()}}" method="post">
+								<button class="btn btn-outline" type="submit"
+									onclick="return confirm('Sicuro che non ti va più di Lavorare?')">
+									Passa Offline
+								</button>
+							</form>
 						</div>
 					</div>
 				</div>

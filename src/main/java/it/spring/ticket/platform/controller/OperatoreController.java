@@ -48,6 +48,18 @@ public class OperatoreController {
 	public String profiloOperatore(Authentication authentication, Model model) {
 		Optional<User> loggedUser = userRepo.findByUsername(authentication.getName());
 		User utente = loggedUser.get();
+		int verifica = 0;
+		for(Ticket ticket : utente.getTickets()) {
+			if(ticket.getStato().getId() != 3) {
+				verifica = verifica +1;
+			}
+		}
+		if (verifica == 0) {
+			model.addAttribute ("nonDisponibile", true);
+		}
+		else {
+			model.addAttribute("nonDisponibile", false);
+		}
 		model.addAttribute("user", utente);
 		return "utenti/il-mio-profilo";
 	}
@@ -59,6 +71,13 @@ public class OperatoreController {
 		userStacca.setDisponibile(false);
 		userRepo.save(userStacca);
 		return "redirect/il-mio-profilo";
+	}
+	
+	@GetMapping("/modifica-profilo/{id}")
+	public String modificaProfilo(@PathVariable(name="id") Integer id, Model model) {
+		Optional <User> utente = userRepo.findById(id);
+		model.addAttribute("user", utente.get());
+		return "utenti/modifica-profilo";
 	}
 
 }

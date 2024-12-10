@@ -1,0 +1,76 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="~{fragments :: pageHead(Creazione-Ticket)}">
+</head>
+
+<body>
+	<!-- Bootstrap Bundle with Popper -->
+	<script th:src="@{/webjars/bootstrap/5.1.3/js/bootstrap.bundle.min.js}"></script>
+	<header th:insert="~{fragments :: header(admin)}"></header>
+
+	<!--Contenuto Homepage-->
+	<section class="content">
+		<div class="container myContainer col-lg-10 mt-5">
+			<div class="row pt-5 justify-content-center">
+				<img th:src="@{/img/TicketPlatform-Logo.png}" alt="" style="width: 100px;" />
+			</div>
+			<div class="row pt-5 px-5">
+				<h6><span style="color:orange;">Modifica</span> Profilo</h6>
+				<p class="small-texts">Aggiorna i tuoi dati anagrafici.</p>
+				<hr style="color: orange;">
+			</div>
+			<div class="row p-5">
+				<div class="col">
+					<!--Form inserimento ticket-->
+					<form id="ticketForm" th:object="${user}"
+						th:action="@{/modifica-profilo/{id} id=${${user.getId()}}}" method="post">
+						<!--Titolo-->
+						<input type="hidden" id="id" th:field="*{id}">
+						<input type="hidden" id="roles" th:field="*{roles}">
+						<input type="hidden" id="tickets" th:field="*{tickets}">
+						<input type="hidden" id="note" th:field="*{note}">
+						<div class="row mb-3">
+							<label for="username" class="form-label">Username</label>
+							<input type="text" class="form-control" id="username" th:field="*{username}"
+								th:errorClass="is-invalid">
+							<div th:if="${#fields.hasErrors('username')}" class="invalid-feedback">
+								<ul>
+									<li th:each="err : ${#fields.errors('username')}" th:text="${err}"></li>
+								</ul>
+							</div>
+						</div>
+						<!--Descrizione-->
+						<div class="row mb-3">
+							<label for="password" class="form-label">Password</label>
+							<input type="text" class="form-control" id="password" th:field="*{password}"
+								th:errorClass="is-invalid">
+							<div th:if="${#fields.hasErrors('password')}" class="invalid-feedback">
+								<ul>
+									<li th:each="err : ${#fields.errors('password')}" th:text="${err}"></li>
+								</ul>
+							</div>
+						</div>
+						<div class="row py-3">
+							<div class="d-grid col-4  mx-auto">
+								<button type="submit" class="btn btn-outline">Aggiorna Dati</button>
+							</div>
+						</div>
+
+					</form>
+				</div>
+			</div>
+		</div>
+	</section>
+
+
+
+	<!--Piè di Pagina-->
+	<section>
+		<footer th:insert="fragments :: footer(admin)"></footer>
+	</section>
+
+
+</body>
+
+</html>
