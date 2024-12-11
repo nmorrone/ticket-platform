@@ -94,6 +94,15 @@ public class TicketController {
 	@PostMapping("/crea-ticket")
 	public String storeTicket(@Valid @ModelAttribute("ticket") Ticket ticketForm, BindingResult bindingResults, Model model) {
 			if(bindingResults.hasErrors()) {
+				//ripasso i valori categorie e operatori in caso di errore
+				List <User> operatori = new ArrayList<>();		
+				for(User user : userRepo.findAll()) {
+					if(user.isDisponibile() == true)  {
+						operatori.add(user);
+					}
+				}
+				model.addAttribute("operatori", operatori);
+				model.addAttribute("categorie", categorieRepo.findAll());
 				return "tickets/crea-ticket";
 				}
 			

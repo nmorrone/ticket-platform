@@ -7,7 +7,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,6 +18,7 @@ import it.spring.ticket.platform.model.Ticket;
 import it.spring.ticket.platform.model.User;
 import it.spring.ticket.platform.repository.TicketsRepository;
 import it.spring.ticket.platform.repository.UserRepository;
+import jakarta.validation.Valid;
 
 @Controller
 @RequestMapping("/")
@@ -73,11 +76,21 @@ public class OperatoreController {
 		return "redirect/il-mio-profilo";
 	}
 	
+	//metodo modifica dati profilo ADMIN no USER
 	@GetMapping("/modifica-profilo/{id}")
 	public String modificaProfilo(@PathVariable(name="id") Integer id, Model model) {
 		Optional <User> utente = userRepo.findById(id);
 		model.addAttribute("user", utente.get());
 		return "utenti/modifica-profilo";
+	}
+	@PostMapping("/modifica-profilo/{id}")
+	public String aggiornaProfilo(@PathVariable(name="id") Integer id, @Valid @ModelAttribute User userForm, BindingResult bindingResults, Model model) {
+		if(bindingResults.hasErrors()) {
+			return "utenti/modifica-profilo";
+		}
+		
+		userRepo.save(userForm);
+		return "redirect:/login";
 	}
 
 }

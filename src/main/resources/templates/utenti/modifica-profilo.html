@@ -23,13 +23,14 @@
 			<div class="row p-5">
 				<div class="col">
 					<!--Form inserimento ticket-->
-					<form id="ticketForm" th:object="${user}"
-						th:action="@{/modifica-profilo/{id} id=${${user.getId()}}}" method="post">
-						<!--Titolo-->
-						<input type="hidden" id="id" th:field="*{id}">
-						<input type="hidden" id="roles" th:field="*{roles}">
-						<input type="hidden" id="tickets" th:field="*{tickets}">
-						<input type="hidden" id="note" th:field="*{note}">
+					<form id="userForm" th:object="${user}"
+						th:action="@{/modifica-profilo/{id} (id=${user.id})}" method="post">
+						<!--Input Nascosti e Username-->
+						<input type="hidden" th:id="id" th:field="*{id}">
+						<input type="hidden" th:id="disponibile" th:field="*{disponibile}">
+						<input type="hidden" th:id="tickets" th:field="*{tickets}">
+						<input type="hidden" th:id="note" th:field="*{note}">
+						<input type="hidden" th:id="roles" th:field="*{roles}">
 						<div class="row mb-3">
 							<label for="username" class="form-label">Username</label>
 							<input type="text" class="form-control" id="username" th:field="*{username}"
@@ -40,7 +41,7 @@
 								</ul>
 							</div>
 						</div>
-						<!--Descrizione-->
+						<!--Password-->
 						<div class="row mb-3">
 							<label for="password" class="form-label">Password</label>
 							<input type="text" class="form-control" id="password" th:field="*{password}"

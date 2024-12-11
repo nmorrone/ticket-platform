@@ -23,12 +23,12 @@
 			<div class="row p-5">
 				<div class="col">
 					<!--Form inserimento ticket-->
-					<form id="ticketForm" th:object="${ticket}"  th:action="${modifica} == true ? @{'/modifica-ticket/'+ ${ticket.getId()}} :
+					<form id="ticketForm" th:object="${ticket}" th:action="${modifica} == true ? @{'/modifica-ticket/'+ ${ticket.getId()}} :
 					 @{/crea-ticket}" method="post">
 						<!--Titolo-->
 						<div class="row mb-3">
 							<label for="titolo" class="form-label">Titolo</label>
-							<input type="text" class="form-control" id="titolo" th:field="*{titolo}"
+							<input type="text" class="form-control" th:id="titolo" th:field="*{titolo}"
 								th:errorClass="is-invalid">
 							<div th:if="${#fields.hasErrors('titolo')}" class="invalid-feedback">
 								<ul>
@@ -39,7 +39,7 @@
 						<!--Descrizione-->
 						<div class="row mb-5">
 							<label for="descrizione" class="form-label">Dettagli del Ticket</label>
-							<textarea type="text" class="form-control" id="descrizione" th:field="*{descrizione}"
+							<textarea type="text" class="form-control" th:id="descrizione" th:field="*{descrizione}"
 								th:errorClass="is-invalid" rows="3"></textarea>
 							<div th:if="${#fields.hasErrors('descrizione')}" class="invalid-feedback">
 								<ul>
@@ -51,7 +51,7 @@
 							<!--Select Menu per Categoria Ticket-->
 							<div class="col-lg-4 mb-3">
 								<label for="categoria">Scegli una Categoria</label>
-								<select class="form-select" th:field="*{categoria}" name="categoria" th:errorClass="is-invalid" required>
+								<select class="form-select" th:id="categoria" th:field="*{categoria}" name="categoria" th:errorClass="is-invalid" required>
 									<option th:each="categoria : ${categorie}" th:value="${categoria.id}"
 										th:text="${categoria.nome}"></option>
 								</select>
@@ -64,9 +64,9 @@
 							<!--Select Menu per Operatori Disponibili-->
 							<div class="col-lg-4 mb-3">
 								<label for="user">Seleziona un Operatore</label>
-								<select class="form-select" th:field="*{user}" th:errorClass="is-invalid" required>
+								<select class="form-select" th:id="user" th:field="*{user}" th:errorClass="is-invalid">
 									<option value="">Nessun Operatore Selezionato</option>
-									<option th:each="user : ${operatori}" th:value="${user.id}" th:text="${user.username}"></option>
+									<option th:each="user : ${operatori}"th:value="${user.id}" th:text="${user.username}"></option>
 								</select>
 								<div th:if="${#fields.hasErrors('user')}" class="invalid-feedback">
 									<ul>
