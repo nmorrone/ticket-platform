@@ -23,14 +23,11 @@
 			<div class="row p-5">
 				<div class="col">
 					<!--Form inserimento ticket-->
-					<form id="userForm" th:object="${user}"
-						th:action="@{/modifica-profilo/{id} (id=${user.id})}" method="post">
+					<form id="userForm" th:object="${user}" th:action="@{/modifica-profilo/{id} (id=${user.id})}"
+						method="post">
 						<!--Input Nascosti e Username-->
 						<input type="hidden" th:id="id" th:field="*{id}">
 						<input type="hidden" th:id="disponibile" th:field="*{disponibile}">
-						<input type="hidden" th:id="tickets" th:field="*{tickets}">
-						<input type="hidden" th:id="note" th:field="*{note}">
-						<input type="hidden" th:id="roles" th:field="*{roles}">
 						<div class="row mb-3">
 							<label for="username" class="form-label">Username</label>
 							<input type="text" class="form-control" id="username" th:field="*{username}"
@@ -51,6 +48,12 @@
 									<li th:each="err : ${#fields.errors('password')}" th:text="${err}"></li>
 								</ul>
 							</div>
+						</div>
+						<div class="mb-3 form-check form-check-inline" th:each="roles : ${roles}">
+							<input type="checkbox" class="form-check-input" th:id="|ingrediente_${ingrediente.id}|"
+								th:value="${ingrediente.id}" th:field="*{ingredienti}">
+							<label for="|ingrediente_${ingrediente.id}|" class="form-check-label"
+								th:text="${ingrediente.nome}"></label>
 						</div>
 						<div class="row py-3">
 							<div class="d-grid col-4  mx-auto">

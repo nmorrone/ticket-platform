@@ -33,54 +33,53 @@ import jakarta.validation.Valid;
 @Controller
 @RequestMapping("/")
 public class TicketController {
-	
+
 	@Autowired
 	private TicketsRepository ticketsRepo;
 	@Autowired
 	private UserRepository userRepo;
 	@Autowired
 	private CategorieRepository categorieRepo;
-	@Autowired 
+	@Autowired
 	private StatiRepository statiRepo;
-	@Autowired 
+	@Autowired
 	private NoteRepository noteRepo;
-	
-	//visualizzazione tickets ADMIN
+
+	// visualizzazione tickets ADMIN
 	@GetMapping("/dashboard-admin")
-	public String listaTickets(Authentication authentication, @RequestParam(name="keyword", required = false) String keyword,Model model) {
-		List <User> operatori = new ArrayList<>();
-		List <Ticket> listaTickets;
-		if(keyword!=null && !keyword.isBlank()) {
+	public String listaTickets(Authentication authentication,
+			@RequestParam(name = "keyword", required = false) String keyword, Model model) {
+		List<User> operatori = new ArrayList<>();
+		List<Ticket> listaTickets;
+		if (keyword != null && !keyword.isBlank()) {
 			listaTickets = ticketsRepo.findByTitoloContaining(keyword);
 			model.addAttribute("keyword", keyword);
-		}
-		else {
+		} else {
 			listaTickets = ticketsRepo.findAll();
 		}
-		for(User user : userRepo.findAll()) {
-			if(user.isDisponibile() == true)  {
+		for (User user : userRepo.findAll()) {
+			if (user.isDisponibile() == true) {
 				operatori.add(user);
 			}
 		}
 		model.addAttribute("tickets", listaTickets);
 		model.addAttribute("operatori", operatori);
 		return "tickets/dashboard-admin";
-		
 	}
-	
-	//rimozione Ticket dalla lista ADMIN
+
+	// rimozione Ticket dalla lista ADMIN
 	@PostMapping("/rimuovi-ticket/{id}")
 	public String rimozioneTicket(@PathVariable Integer id) {
 		ticketsRepo.deleteById(id);
 		return "redirect:/dashboard-admin";
 	}
-	
-	//display pagina inserimento nuovo ticket ADMIN
+
+	// display pagina inserimento nuovo ticket ADMIN
 	@GetMapping("/crea-ticket")
-	public String creaTicket(Model model) {	
-		List <User> operatori = new ArrayList<>();		
-		for(User user : userRepo.findAll()) {
-			if(user.isDisponibile() == true)  {
+	public String creaTicket(Model model) {
+		List<User> operatori = new ArrayList<>();
+		for (User user : userRepo.findAll()) {
+			if (user.isDisponibile() == true) {
 				operatori.add(user);
 			}
 		}
@@ -88,41 +87,42 @@ public class TicketController {
 		model.addAttribute("operatori", operatori);
 		model.addAttribute("categorie", categorieRepo.findAll());
 		return "tickets/crea-ticket";
-		
+
 	}
-	//salvataggio nuovo Ticket ADMIN
+
+	// salvataggio nuovo Ticket ADMIN
 	@PostMapping("/crea-ticket")
-	public String storeTicket(@Valid @ModelAttribute("ticket") Ticket ticketForm, BindingResult bindingResults, Model model) {
-			if(bindingResults.hasErrors()) {
-				//ripasso i valori categorie e operatori in caso di errore
-				List <User> operatori = new ArrayList<>();		
-				for(User user : userRepo.findAll()) {
-					if(user.isDisponibile() == true)  {
-						operatori.add(user);
-					}
+	public String storeTicket(@Valid @ModelAttribute("ticket") Ticket ticketForm, BindingResult bindingResults,
+			Model model) {
+		if (bindingResults.hasErrors()) {
+			// ripasso i valori categorie e operatori in caso di errore
+			List<User> operatori = new ArrayList<>();
+			for (User user : userRepo.findAll()) {
+				if (user.isDisponibile() == true) {
+					operatori.add(user);
 				}
-				model.addAttribute("operatori", operatori);
-				model.addAttribute("categorie", categorieRepo.findAll());
-				return "tickets/crea-ticket";
-				}
-			
-			else if(ticketForm.getUser() == null) {
-				ticketForm.setStato(statiRepo.findById(1).get());
 			}
-			else if (ticketForm.getUser() != null) {
+			model.addAttribute("operatori", operatori);
+			model.addAttribute("categorie", categorieRepo.findAll());
+			return "tickets/crea-ticket";
+		}
+
+		else if (ticketForm.getUser() == null) {
+			ticketForm.setStato(statiRepo.findById(1).get());
+		} else if (ticketForm.getUser() != null) {
 			ticketForm.setStato(statiRepo.findById(2).get());
-			}
-			ticketsRepo.save(ticketForm);
-			return "redirect:/dashboard-admin";
+		}
+		ticketsRepo.save(ticketForm);
+		return "redirect:/dashboard-admin";
 	}
-	
-	//metodo visualizzazione Ticket per Modifiche ADMIN
+
+	// metodo visualizzazione Ticket per Modifiche ADMIN
 	@GetMapping("/modifica-ticket/{id}")
-	public String modificaTicket(@PathVariable(name="id") Integer id, Model model) {
-		Optional <Ticket> ticketModifica = ticketsRepo.findById(id);
-		List <User> operatori = new ArrayList<>();		
-		for(User user : userRepo.findAll()) {
-			if(user.isDisponibile() == true)  {
+	public String modificaTicket(@PathVariable(name = "id") Integer id, Model model) {
+		Optional<Ticket> ticketModifica = ticketsRepo.findById(id);
+		List<User> operatori = new ArrayList<>();
+		for (User user : userRepo.findAll()) {
+			if (user.isDisponibile() == true) {
 				operatori.add(user);
 			}
 		}
@@ -132,62 +132,59 @@ public class TicketController {
 		model.addAttribute("modifica", true);
 		return "tickets/crea-ticket";
 	}
-	//metodo salva modifiche Ticket ADMIN
+
+	// metodo salva modifiche Ticket ADMIN
 	@PostMapping("/modifica-ticket/{id}")
-	public String aggiornaTicket(@PathVariable(name="id") Integer id,@Valid @ModelAttribute("ticket") Ticket ticketForm,BindingResult bindingResults, Model model) {
-		
-		if(bindingResults.hasErrors()) {
+	public String aggiornaTicket(@PathVariable(name = "id") Integer id,
+			@Valid @ModelAttribute("ticket") Ticket ticketForm, BindingResult bindingResults, Model model) {
+
+		if (bindingResults.hasErrors()) {
 			return "tickets/crea-ticket";
-		}
-		else if(ticketForm.getUser() == null) {
+		} else if (ticketForm.getUser() == null) {
 			ticketForm.setStato(statiRepo.findById(1).get());
+		} else if (ticketForm.getUser() != null) {
+			ticketForm.setStato(statiRepo.findById(2).get());
 		}
-		else if (ticketForm.getUser() != null) {
-		ticketForm.setStato(statiRepo.findById(2).get());
-		}
-		
+
 		ticketsRepo.save(ticketForm);
 		return "redirect:/dashboard-admin";
 	}
-	
-	//visualizzazione tickets OPERATORE
+
+	// visualizzazione tickets OPERATORE
 	@GetMapping("/tickets")
 	public String listaTicketsOperatore(Authentication authentication, Model model) {
 		Optional<User> loggedUser = userRepo.findByUsername(authentication.getName());
 		User operatore = loggedUser.get();
-		List <Ticket> ticketsOperatore = operatore.getTickets();
+		List<Ticket> ticketsOperatore = operatore.getTickets();
 		model.addAttribute("tickets", ticketsOperatore);
 		model.addAttribute("operatore", operatore);
-		
 		return "tickets/lista-tickets";
 	}
-	
-	//info pagina Ticket Singolo
+	// info pagina Ticket Singolo
 	@GetMapping("/tickets/{id}")
-	public String infoTicket(Authentication authentication,@PathVariable(name="id") Integer id, Model model) {
-		Optional <Ticket> infoTicket = ticketsRepo.findById(id);
-		if(infoTicket.isPresent()) {
-			Ticket ticketForm = infoTicket.get();			
+	public String infoTicket(Authentication authentication, @PathVariable(name = "id") Integer id, Model model) {
+		Optional<Ticket> infoTicket = ticketsRepo.findById(id);
+		if (infoTicket.isPresent()) {
+			Ticket ticketForm = infoTicket.get();
 			Nota notaForm = new Nota();
 			notaForm.setTicket(ticketForm);
 			notaForm.setUser(userRepo.findByUsername(authentication.getName()).get());
 			model.addAttribute("ticket", ticketForm);
 			model.addAttribute("notaForm", notaForm);
+		} else {
+			// codice per Eccezione - Pagina 404
 		}
-		else {
-			//codice per Eccezione - Pagina 404
-		}
-		 return "tickets/info-ticket";
+		return "tickets/info-ticket";
 	}
-	
-	//metodo aggiorno stato Ticket
+
+	// metodo aggiorno stato Ticket
 	@PostMapping("/completa-ticket/tickets/{id}")
-	public String completaLavorazioneTicket(@PathVariable(name="id") Integer id) {
+	public String completaLavorazioneTicket(@PathVariable(name = "id") Integer id) {
 		Ticket ticketCompletato = ticketsRepo.findById(id).get();
 		ticketCompletato.setStato(statiRepo.findById(3).get());
 		ticketsRepo.save(ticketCompletato);
 		return "redirect:/tickets/" + id;
-		
+
 	}
-	
+
 }

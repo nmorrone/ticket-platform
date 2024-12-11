@@ -30,20 +30,20 @@
 						<span sec:authentication="principal.authorities" style="font-style: italic;"></span>
 					</p>
 					<div th:if="${!user.tickets.isEmpty()}">
-					<p style="color: orange;">Le mie Lavorazioni</p>
-					<hr style="color: orange;">
-					<table th:object="${tickets}" class="table table-borderless">
-						<thead>
+						<p style="color: orange;">Le mie Lavorazioni</p>
+						<hr style="color: orange;">
+						<table th:object="${tickets}" class="table table-borderless">
+							<thead>
 
-						</thead>
-						<tbody>
-							<tr th:each="ticket : ${user.getTickets()}">
-								<td><a th:href="@{'tickets/' + ${ticket.getId()}}">[[${ticket.getTitolo()}]]</a>
-								</td>
-								<td th:text="${ticket.stato.getNome()}"></td>
-							</tr>
-						</tbody>
-					</table>
+							</thead>
+							<tbody>
+								<tr th:each="ticket : ${user.getTickets()}">
+									<td><a th:href="@{'tickets/' + ${ticket.getId()}}">[[${ticket.getTitolo()}]]</a>
+									</td>
+									<td th:text="${ticket.stato.getNome()}"></td>
+								</tr>
+							</tbody>
+						</table>
 					</div>
 					<!--sezione di modifica per ADMIN-->
 					<div sec:authorize="hasAuthority('ADMIN')">
@@ -63,18 +63,27 @@
 									style="width: 100px;" /></div>
 
 						</div>
-						<div th:if="${nonDisponibile} == false" class="text-center">
+						<div th:if="${possoStaccare} == false" class="text-center">
 							<span style="color: firebrick;">Mi dispiace ma non potrai aggiornare il tuo Stato finché non
 								completi tutti i Ticket rimasti in lavorazione</span>
 
 						</div>
-						<div th:if="${nonDisponibile} == true" class="text-center">
-							<p class="small-texts">Congratulazione! <br>Hai Completato il tuo Lavoro?<br>Aggiorna subito
+						<div th:if="${possoStaccare} == true AND ${user.disponibile} == true" class="text-center">
+							<p>Congratulazione! <br>Hai Completato il tuo Lavoro!<br>Aggiorna subito
 								il tuo Stato</p>
 							<form th:action="@{'/aggiorna-stato/' + ${user.getId()}}" method="post">
 								<button class="btn btn-outline" type="submit"
 									onclick="return confirm('Sicuro che non ti va più di Lavorare?')">
 									Passa Offline
+								</button>
+							</form>
+						</div>
+						<div th:if="${user.disponibile} == false" class="text-center">
+							<p>Attualmente sei Offline<br>Vuoi ricominciare a Lavorare?</p>
+							<form th:action="@{'/torna-online/' + ${user.getId()}}" method="post">
+								<button class="btn btn-outline" type="submit"
+									onclick="return confirm('Sicuro che vuoi ricominciare a Lavorare?')">
+									Passa Online
 								</button>
 							</form>
 						</div>

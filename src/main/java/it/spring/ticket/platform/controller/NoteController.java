@@ -19,7 +19,6 @@ public class NoteController {
 	
 	@Autowired
 	private NoteRepository noteRepo;
-	
 	//metodo CREATE Nota su Ticket Specifico
 	@PostMapping("/aggiungi-nota")
 	public String storeNota(@Valid @ModelAttribute("notaForm") Nota notaForm,BindingResult bindingResults, Model model) {
@@ -30,7 +29,6 @@ public class NoteController {
 		noteRepo.save(notaForm);
 		return"redirect:/tickets/" + notaForm.getTicket().getId();		
 	}
-	
 	//metodo REMOVE Nota da Ticket Specifico
 	@PostMapping("/rimuovi-nota/{id}")
 	public String rimozioneNota(@PathVariable Integer id) {

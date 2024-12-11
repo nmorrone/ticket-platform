@@ -58,24 +58,30 @@ public class OperatoreController {
 			}
 		}
 		if (verifica == 0) {
-			model.addAttribute ("nonDisponibile", true);
+			model.addAttribute ("possoStaccare", true);
 		}
 		else {
-			model.addAttribute("nonDisponibile", false);
+			model.addAttribute("possoStaccare", false);
 		}
 		model.addAttribute("user", utente);
 		return "utenti/il-mio-profilo";
 	}
 	
-	//metodo POST Mapping
+	//metodo per andare Offline con Controllo lavorazione Ticket
 	@PostMapping("/aggiorna-stato/{id}")
-	public String nonDisponibileOperatore(@PathVariable(name="id") Integer id) {
+	public String nonDisponibileOperatore(@PathVariable Integer id) {
 		User userStacca = userRepo.findById(id).get();
 		userStacca.setDisponibile(false);
 		userRepo.save(userStacca);
-		return "redirect/il-mio-profilo";
+		return "redirect:/il-mio-profilo";
 	}
-	
+	@PostMapping("/torna-online/{id}")
+	public String tornaDisponibileOperatore(@PathVariable Integer id) {
+		User userStacca = userRepo.findById(id).get();
+		userStacca.setDisponibile(true);
+		userRepo.save(userStacca);
+		return "redirect:/il-mio-profilo";
+	}
 	//metodo modifica dati profilo ADMIN no USER
 	@GetMapping("/modifica-profilo/{id}")
 	public String modificaProfilo(@PathVariable(name="id") Integer id, Model model) {
@@ -84,11 +90,10 @@ public class OperatoreController {
 		return "utenti/modifica-profilo";
 	}
 	@PostMapping("/modifica-profilo/{id}")
-	public String aggiornaProfilo(@PathVariable(name="id") Integer id, @Valid @ModelAttribute User userForm, BindingResult bindingResults, Model model) {
+	public String aggiornaProfilo(@PathVariable(name="id") Integer id, @Valid @ModelAttribute("user") User userForm, BindingResult bindingResults, Model model) {
 		if(bindingResults.hasErrors()) {
 			return "utenti/modifica-profilo";
 		}
-		
 		userRepo.save(userForm);
 		return "redirect:/login";
 	}
