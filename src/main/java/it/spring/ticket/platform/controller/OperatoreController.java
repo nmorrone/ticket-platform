@@ -75,6 +75,7 @@ public class OperatoreController {
 		userRepo.save(userStacca);
 		return "redirect:/il-mio-profilo";
 	}
+	//metodo per tornare Online Operatore
 	@PostMapping("/torna-online/{id}")
 	public String tornaDisponibileOperatore(@PathVariable Integer id) {
 		User userStacca = userRepo.findById(id).get();
@@ -89,12 +90,19 @@ public class OperatoreController {
 		model.addAttribute("user", utente.get());
 		return "utenti/modifica-profilo";
 	}
+	//metodo modifica info accesso con mantenimento ruoli e funzionalità password
 	@PostMapping("/modifica-profilo/{id}")
 	public String aggiornaProfilo(@PathVariable(name="id") Integer id, @Valid @ModelAttribute("user") User userForm, BindingResult bindingResults, Model model) {
 		if(bindingResults.hasErrors()) {
 			return "utenti/modifica-profilo";
 		}
-		userRepo.save(userForm);
+		User existingUser = userRepo.findById(id).get();
+		if(existingUser != null) {
+			String passwordValida = "{noop}" + userForm.getPassword();
+			userForm.setPassword(passwordValida);
+			userForm.setRoles(existingUser.getRoles());
+			userRepo.save(userForm);
+		}
 		return "redirect:/login";
 	}
 
