@@ -15,22 +15,20 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-
-import is.lessons.spring.pizzeria.model.Pizza;
 import it.spring.ticket.platform.model.Ticket;
 import it.spring.ticket.platform.repository.TicketsRepository;
 import jakarta.validation.Valid;
 
 @RestController
 @CrossOrigin
-@RequestMapping("/api")
+@RequestMapping("/api/tickets")
 public class TicketRestController {
 	
 	@Autowired
 	private TicketsRepository ticketsRepo;
 	
 	//api method READ lista tickets con Keyword Opzionale
-	@GetMapping("/tickets")
+	@GetMapping
 	public ResponseEntity <List<Ticket>> index(@RequestParam(name="keyword", required = false) String keyword){
 		
 		if(keyword != null && !keyword.isBlank()) {
@@ -43,7 +41,7 @@ public class TicketRestController {
 	}
 	
 	//api method READ singolo ticket
-	@GetMapping("/tickets/{id}")
+	@GetMapping("{id}")
 	public ResponseEntity <Ticket> infoTicket(@PathVariable("id") Integer id){
 		Optional <Ticket> ticketById = ticketsRepo.findById(id);
 		if (ticketById.isPresent()) {
@@ -54,25 +52,22 @@ public class TicketRestController {
 		}
 	}
 	
-	//metodo UPDATE Titolo Ticket
-	@PutMapping("/tickets/{id}")
-	public ResponseEntity<Ticket> aggiornaTitoloTicket(@PathVariable Integer id, @RequestBody Ticket ticket){
+	@PutMapping("/{id}")
+	public ResponseEntity<Ticket> aggiornaTitoloTicket(@PathVariable Integer id, @RequestBody Ticket ticket) {
+	    
 		try {
-			Optional <Ticket> ticketById = ticketsRepo.findById(id);
-			Ticket modificheTicket = ticketById.get();
-			modificheTicket.setDescrizione(ticket.getDescrizione());
-			ticketsRepo.save(modificheTicket);
-			return ResponseEntity.ok(modificheTicket);
-			}
-		catch(Exception e) {
-			}
-		return ResponseEntity.notFound().build();
-	}
-	//API Metodo POST nuovo Ticket
-	@PostMapping("/tickets")
-	public void creazioneTicket(@Valid @RequestBody Ticket ticket){
-		ticketsRepo.save(ticket);
-	}
+	        Optional<Ticket> ticketById = ticketsRepo.findById(id);
+	            Ticket modificheTicket = ticketById.get();
+	            modificheTicket.setDescrizione(ticket.getDescrizione());
+	            ticketsRepo.save(modificheTicket);
+	            return ResponseEntity.ok(modificheTicket);
+	    } catch (Exception e) {
+	        e.printStackTrace(); // Stampa l'eccezione per debug
+	    }
+		
+		return ResponseEntity.notFound().build();		
+		
 
-
+}
+	
 }
