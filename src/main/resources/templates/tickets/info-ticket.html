@@ -15,7 +15,7 @@
 			<div class="row p-5">
 				<!--Sezione Info Ticket / Colonna SX-->
 				<div class="col-lg-8" th:object="${ticket}">
-					<div style="font-style: italic;">Ecco tutte le Informazione del Ticket
+					<div><h6>Ecco le informazioni <span style="color: orange;">del tuo Ticket</span></h6>
 						<hr style="color: orange; width: 50%;">
 					</div>
 					<div class="col mb-5">
@@ -88,9 +88,9 @@
 								<div class="modal-content p-5">
 									<div class="modal-header">
 										<h1 class="modal-title fs-5 small-texts" id="staticBackdropLabel">Lista
-											Annotazioni Lavorazione Ticket</h1>
-										<button type="button" class="btn-close" data-bs-dismiss="modal"
-											aria-label="Close"></button>
+											Annotazioni <span style="color: orange;">del Ticket</span</h1>
+										<!--<button type="button" class="btn-close" data-bs-dismiss="modal"
+											aria-label="Close"></button>-->
 									</div>
 									<div class="modal-body">
 										<div th:if="${ticket.note.isEmpty()}">
@@ -137,7 +137,7 @@
 										</div>
 									</div>
 									<div class="modal-footer">
-										<button type="button" class="btn btn-primary"
+										<button type="button" class="btn btn-outline-danger"
 											data-bs-dismiss="modal">Chiudi</button>
 									</div>
 								</div>

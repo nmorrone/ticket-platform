@@ -1,26 +1,37 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org">
+
 <head th:replace="~{fragments :: pageHead(Benvenuto)}">
 </head>
+
 <body>
-<!-- Bootstrap Bundle with Popper -->
-<script th:src="@{/webjars/bootstrap/5.1.3/js/bootstrap.bundle.min.js}"></script>
-<header th:insert="~{fragments :: header(home)}"></header>
+	<!-- Bootstrap Bundle with Popper -->
+	<script th:src="@{/webjars/bootstrap/5.1.3/js/bootstrap.bundle.min.js}"></script>
+	<header th:insert="~{fragments :: header(home)}"></header>
 
-<!--Contenuto Homepage-->
-<section>
-	<div class="container">
-		
-	</div>
-</section>
-	
+	<!--Contenuto Homepage-->
+	<section class="content">
+		<div class="container myContainer col-lg-10 mt-5">
+			<div class="row p-5 justify-content-center">
+				<div class="py-3 text-center">
+					<img th:src="@{/img/TicketPlatform-Logo.png}" alt="" style="width: 300px;" />
+				</div>
+				<div class="py-3 text-center">
+					<h4>Benvenuto nel tuo Programma di <span style=" color: orange;">BackOffice</span></h4>
+				</div>
+			</div>
+
+		</div>
+	</section>
 
 
-<!--Piè di Pagina-->
-<section>
-<footer th:insert="fragments :: footer(home)"></footer>
-</section>
-	
-	
+
+	<!--Piè di Pagina-->
+	<section>
+		<footer th:insert="fragments :: footer(home)"></footer>
+	</section>
+
+
 </body>
+
 </html>
