@@ -1,4 +1,4 @@
-<!DOCTYPE HTML>
+ <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org">
 
 <head th:replace="~{fragments :: pageHead(Benvenuto)}">
@@ -28,7 +28,7 @@
 
 	<!--Piè di Pagina-->
 	<section>
-		<footer th:insert="fragments :: footer(home)"></footer>
+		<footer th:insert="~{fragments :: footer(home)}"></footer>
 	</section>
 
 
