@@ -49,18 +49,22 @@
 										th:classappend="${pagename == 'dashboard'} ? 'nav-link-active' : 'nav-link'">Dashboard
 										Admin</a>
 								</li>
+								<li class="nav-item" sec:authorize="hasAuthority('ADMIN')">
+									<a class="nav-link" th:href="@{'/lista-operatori'}"
+										th:classappend="${pagename == 'operatori'} ? 'nav-link-active' : 'nav-link'">Operatori</a>
+								</li>
 								<li class="nav-item" sec:authorize="hasAuthority('USER')">
 									<a class="nav-link" aria-current="page" th:href="@{'/tickets'}"
 										th:classappend="${pagename == 'tickets'} ? 'nav-link-active':'nav-link'">Le mie
 										Lavorazioni</a>
 								</li>
 								</li>
-								<li class="nav-item">
+								<li class="nav-item" sec:authorize="isAuthenticated()">
 									<a class="nav-link" aria-current="page" th:href="@{'/il-mio-profilo'}"
 										th:classappend="${pagename == 'profilo'} ? 'nav-link-active':'nav-link'">Il mio
 										Profilo</a>
 								</li>
-								<li class="nav-item">
+								<li class="nav-item" sec:authorize="!isAuthenticated()">
 									<a class="nav-link" aria-current="page" th:href="@{'/login'}"
 										th:classappend="${pagename == 'login'} ? 'nav-link-active':'nav-link'">Accedi</a>
 								</li>

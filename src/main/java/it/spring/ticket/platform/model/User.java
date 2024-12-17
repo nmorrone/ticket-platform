@@ -31,9 +31,11 @@ public class User {
 	private boolean disponibile;
 	// entity relationship 1 to Many
 	@OneToMany(mappedBy = "user")
+	@JsonManagedReference
 	private List<Ticket> tickets;
 	// entity relationship 1 to Many
 	@OneToMany(mappedBy = "user")
+	@JsonManagedReference
 	private List<Nota> note;
 
 	// getters and setters

@@ -90,7 +90,7 @@ public class OperatoreController {
 		model.addAttribute("user", utente.get());
 		return "utenti/modifica-profilo";
 	}
-	//metodo modifica info accesso con mantenimento ruoli e funzionalità password
+	//metodo modifica info login con mantenimento ruoli e funzionalità password
 	@PostMapping("/modifica-profilo/{id}")
 	public String aggiornaProfilo(@PathVariable(name="id") Integer id, @Valid @ModelAttribute("user") User userForm, BindingResult bindingResults, Model model) {
 		if(bindingResults.hasErrors()) {
@@ -105,5 +105,14 @@ public class OperatoreController {
 		}
 		return "redirect:/login";
 	}
-
+	//metodo ADMIN Visualizza Operatori Registrati
+	@GetMapping("/lista-operatori")
+	public String indexOperatori(Authentication authentication, Model model) {
+		Optional<User> loggedUser = userRepo.findByUsername(authentication.getName());
+		User user = loggedUser.get();		
+		List <User> operatori = userRepo.findAll();
+		model.addAttribute("operatori", operatori);
+		model.addAttribute("user", user);
+		return "utenti/lista-operatori";
+	}
 }

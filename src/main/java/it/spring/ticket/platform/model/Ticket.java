@@ -45,12 +45,10 @@ public class Ticket {
 	// entity relationship Many to 1
 	@ManyToOne
 	@JoinColumn(name = "categoria_id", nullable = false)
-	@JsonBackReference
 	private Categoria categoria;
 	// entity relationshop Many to 1
 	@ManyToOne
 	@JoinColumn(name = "stato_id", nullable = false)
-	@JsonBackReference
 	private Stato stato;
 	// entity relationship 1to1
 	@ManyToOne
@@ -59,6 +57,7 @@ public class Ticket {
 	private User user;
 	// entity relationship 1 to Many
 	@OneToMany(mappedBy = "ticket")
+	@JsonIgnore
 	private List<Nota> note;
 	
 	public Ticket() {

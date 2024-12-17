@@ -87,7 +87,6 @@ public class TicketController {
 		model.addAttribute("operatori", operatori);
 		model.addAttribute("categorie", categorieRepo.findAll());
 		return "tickets/crea-ticket";
-
 	}
 
 	// salvataggio nuovo Ticket ADMIN
@@ -137,7 +136,6 @@ public class TicketController {
 	@PostMapping("/modifica-ticket/{id}")
 	public String aggiornaTicket(@PathVariable(name = "id") Integer id,
 			@Valid @ModelAttribute("ticket") Ticket ticketForm, BindingResult bindingResults, Model model) {
-
 		if (bindingResults.hasErrors()) {
 			return "tickets/crea-ticket";
 		} else if (ticketForm.getUser() == null) {
@@ -145,7 +143,6 @@ public class TicketController {
 		} else if (ticketForm.getUser() != null) {
 			ticketForm.setStato(statiRepo.findById(2).get());
 		}
-
 		ticketsRepo.save(ticketForm);
 		return "redirect:/dashboard-admin";
 	}
@@ -172,7 +169,7 @@ public class TicketController {
 			model.addAttribute("ticket", ticketForm);
 			model.addAttribute("notaForm", notaForm);
 		} else {
-			// codice per Eccezione - Pagina 404
+			
 		}
 		return "tickets/info-ticket";
 	}
