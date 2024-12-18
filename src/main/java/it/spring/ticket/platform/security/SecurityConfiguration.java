@@ -2,6 +2,7 @@ package it.spring.ticket.platform.security;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
@@ -16,6 +17,10 @@ public class SecurityConfiguration {
 		
 		http.authorizeHttpRequests()
 		
+		.requestMatchers("/dashboard-admin","/modifica-profilo/**","/modifica-ticket/**","/crea-ticket").hasAuthority("ADMIN")
+		.requestMatchers(HttpMethod.POST, "/crea-ticket", "/modifica-profilo/**").hasAuthority("ADMIN")
+		.requestMatchers("/tickets", "/tickets/**", "/il-mio-profilo").hasAnyAuthority("USER", "ADMIN")
+		.requestMatchers(HttpMethod.POST, "/tickets", "/tickets/**").hasAnyAuthority("USER", "ADMIN")
 		.requestMatchers("/**").permitAll()
 		.and().formLogin().and().logout().and().exceptionHandling()
 		.and().csrf().disable();
